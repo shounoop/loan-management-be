@@ -1,0 +1,27 @@
+version: '1.0'
+services:
+  express-service:
+    build: ./express-service
+    ports:
+      - '3000:3000'
+    # networks:
+    #   - backend-network
+    depends_on:
+      - spring-service
+    expose:
+      - '3000'
+  spring-service:
+    build: ./spring-service
+    ports:
+      - '8080:8080'
+    # networks:
+    #   - backend-network
+    expose:
+      - '8080'
+# networks:
+#   backend-network:
+
+networks:
+  default:
+    driver: bridge
+    name: mynetwork
