@@ -10,9 +10,10 @@ app.get('/', (req, res) => {
 
 app.get('/api/express-to-spring', async (req, res) => {
 	try {
-		const response = await axios.get('http://localhost:8080/api/hello');
+		const response = await axios.get('http://spring-service:8080/api/hello');
 		res.send({ message: `Express.js received: ${response.data}` });
 	} catch (error) {
+		console.log(error);
 		res
 			.status(500)
 			.send({ error: 'Error communicating with Spring Boot service' });

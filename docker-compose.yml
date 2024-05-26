@@ -4,8 +4,8 @@ services:
     build: ./express-service
     ports:
       - '3000:3000'
-    # networks:
-    #   - backend-network
+    networks:
+      - loan-management-network
     depends_on:
       - spring-service
     expose:
@@ -14,14 +14,9 @@ services:
     build: ./spring-service
     ports:
       - '8080:8080'
-    # networks:
-    #   - backend-network
+    networks:
+      - loan-management-network
     expose:
       - '8080'
-# networks:
-#   backend-network:
-
 networks:
-  default:
-    driver: bridge
-    name: mynetwork
+  loan-management-network:
