@@ -2,11 +2,11 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('LoanType', {
-            loan_type_id: {
+            id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
             },
             loan_type_name: {
                 type: Sequelize.STRING(50),
@@ -15,11 +15,11 @@ module.exports = {
             loan_type_desc: {
                 type: Sequelize.STRING(255),
             },
-            created_at: {
+            createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            updated_at: {
+            updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             }

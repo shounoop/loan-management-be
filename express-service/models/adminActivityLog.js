@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            AdminActivityLog.belongsTo(models.Admin, { foreignKey: 'admin_id' });
+            AdminActivityLog.belongsTo(models.Admin, { foreignKey: 'id' });
         }
     };
     //object relational mapping

@@ -11,17 +11,14 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            LoanType.hasMany(models.LoanProductType, { foreignKey: 'loan_type_id' });
+            LoanType.hasMany(models.LoanProductType, { foreignKey: 'id' });
         }
     };
     //object relational mapping
     LoanType.init({
-        loan_type_name: {
-            type: DataTypes.STRING(50),
-        },
-        loan_type_desc: {
-            type: DataTypes.STRING(255),
-        },
+        loan_type_name: DataTypes.STRING(50),
+        loan_type_desc: DataTypes.STRING(255),
+
     }, {
         sequelize,
         modelName: 'LoanType',

@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            LoanProductMethod.belongsTo(models.LoanProduct, { foreignKey: 'loan_product_id' });
-            LoanProductMethod.belongsTo(models.LoanMethod, { foreignKey: 'loan_method_id' });
+            LoanProductMethod.belongsTo(models.LoanProduct, { foreignKey: 'id' });
+            LoanProductMethod.belongsTo(models.LoanMethod, { foreignKey: 'id' });
         }
     };
     //object relational mapping

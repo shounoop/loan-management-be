@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class loanProduct extends Model {
+    class LoanProduct extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             LoanProduct.hasMany(models.Payment, { foreignKey: 'loan_product_id' });
             LoanProduct.hasMany(models.Document, { foreignKey: 'loan_product_id' });
             LoanProduct.hasMany(models.LoanProductType, { foreignKey: 'loan_product_id' });
-            LoanProduct.hasMany(models.LoanProductMethod, { foreignKey: 'loan_product_id' });
+            LoanProduct.hasMany(models.LoanProductMethod, { foreignKey: 'id' });
         }
     };
     //object relational mapping
-    loanProduct.init({
+    LoanProduct.init({
         loan_product_name: {
             type: DataTypes.STRING(50),
         },
@@ -62,5 +62,5 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'LoanProduct',
     });
-    return loanProduct;
+    return LoanProduct;
 };
