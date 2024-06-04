@@ -61,7 +61,7 @@ let getDocumentById = (id) => {
             } else {
                 let data = await db.Document.findOne({
                     where: {
-                        id: id
+                        document_id: id
                     },
                 })
                 resolve({
@@ -88,7 +88,7 @@ let editDocument = (data) => {
                 })
             } else {
                 let check = await db.Document.findOne({
-                    where: { id: data.id },
+                    where: { document_id: data.document_idid },
                     raw: false,
                 })
                 if (check) {
@@ -133,11 +133,11 @@ let deleteDocument = (inputId) => {
                 })
             } else {
                 let check = await db.Document.findOne({
-                    where: { id: inputId },
+                    where: { document_id: inputId },
                 })
                 if (check) {
                     await db.Document.destroy({
-                        where: { id: inputId }
+                        where: { document_id: inputId }
                     })
                     resolve({
                         EC: 0,

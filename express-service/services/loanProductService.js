@@ -61,7 +61,7 @@ let getLoanProductById = (id) => {
             } else {
                 let data = await db.LoanProduct.findOne({
                     where: {
-                        id: id
+                        loan_product_id: id
                     },
                 })
                 resolve({
@@ -88,7 +88,7 @@ let editLoanProduct = (data) => {
                 })
             } else {
                 let check = await db.LoanProduct.findOne({
-                    where: { id: data.id },
+                    where: { loan_product_id: data.loan_product_id },
                     raw: false,
                 })
                 if (check) {
@@ -133,11 +133,11 @@ let deleteLoanProduct = (inputId) => {
                 })
             } else {
                 let check = await db.LoanProduct.findOne({
-                    where: { id: inputId },
+                    where: { loan_product_id: inputId },
                 })
                 if (check) {
                     await db.LoanProduct.destroy({
-                        where: { id: inputId }
+                        where: { loan_product_id: inputId }
                     })
                     resolve({
                         EC: 0,

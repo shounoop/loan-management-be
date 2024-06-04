@@ -2,7 +2,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('AdminActivityLog', {
-            id: {
+            log_id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,

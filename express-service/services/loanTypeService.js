@@ -50,7 +50,7 @@ let getLoanTypeById = (id) => {
             } else {
                 let data = await db.LoanType.findOne({
                     where: {
-                        id: id
+                        loan_type_id: id
                     },
                 })
                 resolve({
@@ -111,7 +111,7 @@ let deleteLoanType = (inputId) => {
                 })
             } else {
                 let check = await db.LoanType.findOne({
-                    where: { id: inputId },
+                    where: { loan_type_id: inputId },
                 })
                 if (check) {
                     await db.LoanType.destroy({

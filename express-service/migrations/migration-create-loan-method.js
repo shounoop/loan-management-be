@@ -2,7 +2,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('LoanMethod', {
-            id: {
+            loan_method_id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
