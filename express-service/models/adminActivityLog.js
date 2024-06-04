@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     };
     //object relational mapping
     AdminActivityLog.init({
+        log_id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         admin_id: {
             type: DataTypes.INTEGER,
         },
@@ -27,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
         modelName: 'AdminActivityLog',
     });
     return AdminActivityLog;

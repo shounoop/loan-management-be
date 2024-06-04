@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     };
     //object relational mapping
     LoanMethod.init({
+        loan_method_id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         loan_method_name: {
             type: DataTypes.STRING(100),
         },
@@ -24,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
         modelName: 'LoanMethod',
     });
     return LoanMethod;

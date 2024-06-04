@@ -16,11 +16,22 @@ module.exports = (sequelize, DataTypes) => {
     };
     //object relational mapping
     LoanType.init({
-        loan_type_name: DataTypes.STRING(50),
-        loan_type_desc: DataTypes.STRING(255),
-
+        loan_type_id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        loan_type_name: {
+            type: DataTypes.STRING(50),
+        },
+        loan_type_desc: {
+            type: DataTypes.STRING(255),
+        },
     }, {
         sequelize,
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
         modelName: 'LoanType',
     });
     return LoanType;

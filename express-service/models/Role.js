@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     };
     //object relational mapping
     Role.init({
+        role_id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         role_name: {
             type: DataTypes.STRING(50),
         },
@@ -24,9 +29,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         permission: {
             type: DataTypes.STRING(50),
-        },
+        }
     }, {
         sequelize,
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
         modelName: 'Role',
     });
     return Role;
