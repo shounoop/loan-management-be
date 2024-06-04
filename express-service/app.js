@@ -1,12 +1,21 @@
 // app.js
+'use strict'
 const express = require('express');
 const axios = require('axios');
 const app = express();
 const port = 3000;
+const database = require('./models');
 
-app.get('/', (req, res) => {
-	res.send('Hello from Express.js');
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+
+database.sequelize.authenticate().then(() => {
+	console.log("Connection to database successful!")
+}).catch((err) => {
+	console.log(err)
+})
+
+app.use('/api/v1', require('./routes'));
 
 app.get('/api/express-to-spring', async (req, res) => {
 	try {
