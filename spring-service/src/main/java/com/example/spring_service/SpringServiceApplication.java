@@ -12,10 +12,3 @@ public class SpringServiceApplication {
 	}
 }
 
-@RestController
-class HelloController {
-	@GetMapping("/api/hello")
-	public String sayHello() {
-		return "Hello from Spring Boot!";
-	}
-}
