@@ -22,9 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         loan_product_name: {
             type: DataTypes.STRING(50),
         },
-        loan_type_id: {
-            type: DataTypes.INTEGER,
-        },
         interest_rate: {
             type: DataTypes.DECIMAL(5, 2)
         },

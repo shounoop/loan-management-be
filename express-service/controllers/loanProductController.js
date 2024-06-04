@@ -1,7 +1,7 @@
-import loanTypeService from '../services/loanTypeService'
-let createLoanType = async (req, res) => {
+import LoanProductService from '../services/loanProductService'
+let createLoanProduct = async (req, res) => {
     try {
-        let infor = await loanTypeService.createLoanType(req.body);
+        let infor = await LoanProductService.createLoanProduct(req.body);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
@@ -11,9 +11,9 @@ let createLoanType = async (req, res) => {
         })
     }
 }
-let getAllLoanType = async (req, res) => {
+let getAllLoanProduct = async (req, res) => {
     try {
-        let infor = await loanTypeService.getAllLoanType();
+        let infor = await LoanProductService.getAllLoanProduct();
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
@@ -23,9 +23,9 @@ let getAllLoanType = async (req, res) => {
         })
     }
 }
-let getLoanTypeById = async (req, res) => {
+let getLoanProductById = async (req, res) => {
     try {
-        let infor = await loanTypeService.getAllLoanType(req.query.id);
+        let infor = await LoanProductService.getAllLoanProduct(req.query.id);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
@@ -35,9 +35,9 @@ let getLoanTypeById = async (req, res) => {
         })
     }
 }
-let editLoanType = async (req, res) => {
+let editLoanProduct = async (req, res) => {
     try {
-        let infor = await loanTypeService.editLoanType(req.body);
+        let infor = await LoanProductService.editLoanProduct(req.body);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
@@ -47,9 +47,9 @@ let editLoanType = async (req, res) => {
         })
     }
 }
-let deleteLoanType = async (req, res) => {
+let deleteLoanProduct = async (req, res) => {
     try {
-        let infor = await loanTypeService.deleteLoanType(req.body.id);
+        let infor = await LoanProductService.deleteLoanProduct(req.body.id);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
@@ -60,5 +60,5 @@ let deleteLoanType = async (req, res) => {
     }
 }
 module.exports = {
-    createLoanType, getAllLoanType, getLoanTypeById, editLoanType, deleteLoanType,
+    createLoanProduct, getAllLoanProduct, getLoanProductById, editLoanProduct, deleteLoanProduct,
 }

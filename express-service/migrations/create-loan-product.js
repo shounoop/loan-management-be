@@ -12,10 +12,6 @@ module.exports = {
                 type: Sequelize.STRING(50),
                 allowNull: false
             },
-            loan_type_id: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
             interest_rate: {
                 type: Sequelize.DECIMAL(5, 2),
                 allowNull: false
