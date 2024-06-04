@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class loanProduct extends Model {
+    class LoanProduct extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     //object relational mapping
-    loanProduct.init({
+    LoanProduct.init({
+        loan_product_id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         loan_product_name: {
             type: DataTypes.STRING(50),
         },
@@ -60,7 +65,10 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
         modelName: 'LoanProduct',
     });
-    return loanProduct;
+    return LoanProduct;
 };

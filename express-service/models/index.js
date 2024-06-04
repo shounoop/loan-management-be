@@ -13,7 +13,6 @@ let sequelize;
 const customizeConfig = {
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    logging: false,
     dialectOptions:
         process.env.DB_SSL === 'true' ?
             {
