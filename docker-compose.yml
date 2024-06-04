@@ -1,5 +1,37 @@
 version: '1.0'
+
 services:
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - loan-management-auth-volume:/var/lib/mysql
+    networks:
+      - loan-management-network
+
+  spring-service:
+    depends_on:
+      - mysqldb
+    build: ./spring-service
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      SPRING_APPLICATION_JSON: '{ "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false", "spring.datasource.username" : "$MYSQLDB_USER", "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD", "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect", "spring.jpa.hibernate.ddl-auto" : "update" }'
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+    networks:
+      - loan-management-network
+
   express-service:
     build: ./express-service
     ports:
@@ -10,13 +42,10 @@ services:
       - spring-service
     expose:
       - '3000'
-  spring-service:
-    build: ./spring-service
-    ports:
-      - '8080:8080'
-    networks:
-      - loan-management-network
-    expose:
-      - '8080'
+
 networks:
   loan-management-network:
+
+
+volumes:
+  loan-management-auth-volume:
