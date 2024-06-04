@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     };
     //object relational mapping
     Admin.init({
+        admin_id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         username: {
             type: DataTypes.STRING(50),
         },
@@ -34,6 +39,9 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
         modelName: 'Admin',
     });
     return Admin;
