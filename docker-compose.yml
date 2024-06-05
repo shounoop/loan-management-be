@@ -1,51 +1,71 @@
 version: '1.0'
 
 services:
-  mysqldb:
-    image: mysql:5.7
-    restart: unless-stopped
-    env_file: ./.env
-    environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQLDB_DATABASE
-    ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
-    volumes:
-      - loan-management-auth-volume:/var/lib/mysql
-    networks:
-      - loan-management-network
-
   spring-service:
-    depends_on:
-      - mysqldb
     build: ./spring-service
-    restart: on-failure
+    # restart: on-failure # restart the container if it fails to start or crashes during runtime 
     env_file: ./.env
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
     environment:
-      SPRING_APPLICATION_JSON: '{ "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false", "spring.datasource.username" : "$MYSQLDB_USER", "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD", "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect", "spring.jpa.hibernate.ddl-auto" : "update" }'
+      SPRING_APPLICATION_JSON: '{ "spring.datasource.url"  : "jdbc:mysql://spring-db:$MYSQLDB_DOCKER_PORT/$SPRING_MYSQLDB_DATABASE?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false", "spring.datasource.username" : "$MYSQLDB_USER", "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD", "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect", "spring.jpa.hibernate.ddl-auto" : "update" }'
     volumes:
-      - .m2:/root/.m2
-    stdin_open: true
-    tty: true
+      - .m2:/root/.m2 # mount the local maven repository to the container to avoid downloading dependencies every time the container starts
     networks:
-      - loan-management-network
+      - app-network
+    depends_on:
+      - spring-db
+    stdin_open: true # true to keep the container running in the background and false to stop it when the terminal is closed
+    tty: true # true to keep the container running in the background and false to stop it when the terminal is closed
+
+  spring-db:
+    image: mysql:8
+    # restart: unless-stopped # restart the container unless it is stopped by the user, if not specified, the container will not restart 
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$SPRING_MYSQLDB_DATABASE
+    ports:
+      - $SPRING_MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - spring-db-data:/var/lib/mysql
+    networks:
+      - app-network
 
   express-service:
     build: ./express-service
     ports:
-      - '3000:3000'
-    networks:
-      - loan-management-network
+      - '8081:3000'
+    environment:
+      DB_HOST: express-db
+      DB_USERNAME: root
+      DB_PASSWORD: 123456
+      DB_DATABASE_NAME: expressdb
+      DB_DIALECT: mysql
+      DB_SSL: false
     depends_on:
-      - spring-service
+      - express-db
+    networks:
+      - app-network
     expose:
-      - '3000'
+      - '3000' # expose the port to other services in the same network
 
-networks:
-  loan-management-network:
-
+  express-db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: expressdb
+    volumes:
+      - express-db-data:/var/lib/mysql # express-db-data is the name of the volume, /var/lib/mysql is the path where mysql stores data inside the container
+    networks:
+      - app-network
+    ports:
+      - '3308:3306'
 
 volumes:
-  loan-management-auth-volume:
+  spring-db-data:
+  express-db-data:
+
+
+networks:
+  app-network:
