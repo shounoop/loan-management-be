@@ -20,16 +20,13 @@
     "dotenv": "10.0.0",
     "ejs": "3.1.6",
     "express": "^4.19.2",
-    "express": "^4.19.2",
     "lodash": "4.17.21",
     "mysql2": "2.3.3",
     "node-fetch": "^3.3.2",
     "nodemon": "2.0.15",
     "pdf-lib": "^1.17.1",
-    "pg": "8.7.1",
     "pg-hstore": "2.3.4",
     "pg": "8.7.1",
-    "pg-hstore": "2.3.4",
     "sequelize": "6.13.0",
     "sequelize-cli": "6.3.0"
   }
