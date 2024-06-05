@@ -41,11 +41,11 @@ module.exports = {
                 type: Sequelize.STRING(100),
             },
             createdAt: {
-                allowNull: false,
+                allowNull: true,
                 type: Sequelize.DATE
             },
             updatedAt: {
-                allowNull: false,
+                allowNull: true,
                 type: Sequelize.DATE
             }
         });
