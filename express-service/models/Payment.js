@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Payment.belongsTo(models.LoanProduct, { foreignKey: 'loan_product_id' });
-            Payment.belongsTo(models.Customer, { foreignKey: 'customer_id' });
+            Payment.belongsTo(models.LoanProduct, { foreignKey: 'id' });
+            Payment.belongsTo(models.Customer, { foreignKey: 'id' });
         }
     };
     //object relational mapping
@@ -40,8 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         timestamps: true,
-        createdAt: 'created_at',
-        updatedAt: 'updated_at',
+
         modelName: 'Payment',
     });
     return Payment;

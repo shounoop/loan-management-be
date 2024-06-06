@@ -6,7 +6,7 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
             },
             loan_type_name: {
                 type: Sequelize.STRING(50),
@@ -15,12 +15,12 @@ module.exports = {
             loan_type_desc: {
                 type: Sequelize.STRING(255),
             },
-            created_at: {
-                allowNull: false,
+            createdAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             },
-            updated_at: {
-                allowNull: false,
+            updatedAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             }
         });

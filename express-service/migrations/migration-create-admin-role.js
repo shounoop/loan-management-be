@@ -2,7 +2,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('AdminRole', {
-            admin_role_id: {
+            role_id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
@@ -16,12 +16,12 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            created_at: {
-                allowNull: false,
+            createdAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             },
-            updated_at: {
-                allowNull: false,
+            updatedAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             }
         });

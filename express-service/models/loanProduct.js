@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             LoanProduct.hasMany(models.Payment, { foreignKey: 'loan_product_id' });
             LoanProduct.hasMany(models.Document, { foreignKey: 'loan_product_id' });
             LoanProduct.hasMany(models.LoanProductType, { foreignKey: 'loan_product_id' });
-            LoanProduct.hasMany(models.LoanProductMethod, { foreignKey: 'loan_product_id' });
+            LoanProduct.hasMany(models.LoanProductMethod, { foreignKey: 'id' });
         }
     };
     //object relational mapping
@@ -26,9 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         loan_product_name: {
             type: DataTypes.STRING(50),
-        },
-        loan_type_id: {
-            type: DataTypes.INTEGER,
         },
         interest_rate: {
             type: DataTypes.DECIMAL(5, 2)
@@ -66,8 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         timestamps: true,
-        createdAt: 'created_at',
-        updatedAt: 'updated_at',
+
         modelName: 'LoanProduct',
     });
     return LoanProduct;
