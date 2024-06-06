@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Admin.hasMany(models.AdminActivityLog, { foreignKey: 'admin_id' });
-            Admin.hasMany(models.AdminRole, { foreignKey: 'admin_id' });
+            Admin.hasMany(models.AdminActivityLog, { foreignKey: 'id' });
+            Admin.hasMany(models.AdminRole, { foreignKey: 'id' });
         }
     };
     //object relational mapping
@@ -40,8 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         timestamps: true,
-        createdAt: 'created_at',
-        updatedAt: 'updated_at',
+
         modelName: 'Admin',
     });
     return Admin;

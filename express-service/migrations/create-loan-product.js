@@ -12,10 +12,6 @@ module.exports = {
                 type: Sequelize.STRING(50),
                 allowNull: false
             },
-            loan_type_id: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
             interest_rate: {
                 type: Sequelize.DECIMAL(5, 2),
                 allowNull: false
@@ -56,11 +52,11 @@ module.exports = {
                 type: Sequelize.STRING(50),
                 allowNull: false
             },
-            created_at: {
+            createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            updated_at: {
+            updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             }

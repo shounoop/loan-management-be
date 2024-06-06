@@ -2,7 +2,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('LoanMethod', {
-            laon_method_id: {
+            loan_method_id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
@@ -15,12 +15,12 @@ module.exports = {
             loan_method_desc: {
                 type: Sequelize.TEXT,
             },
-            created_at: {
-                allowNull: false,
+            createdAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             },
-            updated_at: {
-                allowNull: false,
+            updatedAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             }
         });

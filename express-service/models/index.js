@@ -22,6 +22,7 @@ const customizeConfig = {
                 }
             } : {}
     ,
+    logging: false,
     timezone: "+07:00",
     define: {
         freezeTableName: true

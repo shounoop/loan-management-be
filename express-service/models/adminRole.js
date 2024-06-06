@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            AdminRole.belongsTo(models.Admin, { foreignKey: 'admin_id' });
-            AdminRole.belongsTo(models.Role, { foreignKey: 'role_id' });
+            AdminRole.belongsTo(models.Admin, { foreignKey: 'id' });
+            AdminRole.belongsTo(models.Role, { foreignKey: 'id' });
         }
     };
     //object relational mapping
@@ -33,8 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         timestamps: true,
-        createdAt: 'created_at',
-        updatedAt: 'updated_at',
+
         modelName: 'AdminRole',
     });
     return AdminRole;

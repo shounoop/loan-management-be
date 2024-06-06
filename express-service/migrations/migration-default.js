@@ -9,12 +9,12 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
 
-            created_at: {
-                allowNull: false,
+            createdAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             },
-            updated_at: {
-                allowNull: false,
+            updatedAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             }
         });

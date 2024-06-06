@@ -20,12 +20,12 @@ module.exports = {
                 type: Sequelize.STRING(255),
                 allowNull: false,
             },
-            created_at: {
-                allowNull: false,
+            createdAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             },
-            updated_at: {
-                allowNull: false,
+            updatedAt: {
+                allowNull: true,
                 type: Sequelize.DATE
             }
         });
