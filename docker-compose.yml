@@ -34,6 +34,7 @@ services:
 
   express-service:
     build: ./express-service
+    restart: always # restart the container always if it stops 
     env_file: ./.env
     ports:
       - $EXPRESS_LOCAL_PORT:$EXPRESS_DOCKER_PORT
@@ -44,6 +45,12 @@ services:
       DB_DATABASE_NAME: $EXPRESS_MYSQLDB_DATABASE
       DB_DIALECT: $EXPRESS_MYSQLDB_DIALLCT
       DB_SSL: $EXPRESS_MYSQLDB_SSL
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY_ID: $AWS_SECRET_ACCESS_KEY_ID
+      AWS_REGION: $AWS_REGION
+      BUCKET_NAME: $BUCKET_NAME
+      EMAIL_APP_PASSWORD: $EMAIL_APP_PASSWORD
+      EMAIL_APP: $EMAIL_APP
     depends_on:
       - express-db
     networks:
