@@ -1,10 +1,21 @@
 FROM node:18
-WORKDIR /usr/src/app
+
+WORKDIR /app
+
 COPY package*.json ./
-RUN npm install
+
+RUN npm install --production
+
+
 COPY . .
+
 EXPOSE 3000
+
 # CMD ["node", "app.js"]
-# nodemon --exec npx babel-node app.js
-# CMD ["nodemon", "--exec", "npx", "babel-node", "app.js"]
-CMD ["npm", "start"]
+
+
+# CMD ["npx", "sequelize-cli", "db:migrate"]
+# CMD ["npm", "start"]
+
+# how to run two commands in CMD
+CMD ["sh", "-c", "npx sequelize-cli db:migrate && npm start"]
