@@ -9,13 +9,10 @@ const { path, resolve } = require('path')
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
-    region: process.env.BUCKET_NAME
+    region: process.env.AWS_REGION
 })
 
 const bucketName = process.env.BUCKET_NAME
-const newFileNameKey = 'file.pdf'
-const filePath = './uploads/Chuong-trinh-dao-tao_IoT.pdf'
-
 
 
 //config file save on S3
@@ -23,17 +20,18 @@ AWS.config.update({
 
 })
 
-let uploadFile = async (filePath, bucketName) => {
+let uploadFile = async (filePath, bucketName, filename) => {
     try {
         const fileStream = fs.createReadStream(filePath);
         let dataFile = {};
         fileStream.on('error', (err) => {
             console.log('FIle Error: ', err)
         })
-        const fileName = path.basename(filePath);// lấy tên file gốc trong đường dẫn
+        console.log('filepath', filePath)
+        // const fileName = path.basename(filePath);// lấy tên file gốc trong đường dẫn
         const params = {
             Bucket: bucketName,
-            Key: fileName,
+            Key: filename,
             Body: fileStream,
         }
         const data = await s3.upload(params).promise()

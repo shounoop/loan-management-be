@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Document.belongsTo(models.LoanProduct, { foreignKey: 'id' });
+            Document.belongsTo(models.LoanProduct, { foreignKey: 'document_host_id', targetKey: 'loan_product_id', as: 'LoanProductDoc' });
+            Document.belongsTo(models.Payment, { foreignKey: 'document_host_id', targetKey: 'payment_id', as: 'PaymentDoc' });
         }
     };
     //object relational mapping
@@ -21,11 +22,8 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true,
         },
-        loan_product_id: {
+        document_host_id: {
             type: DataTypes.INTEGER,
-        },
-        document_type: {
-            type: DataTypes.STRING(50),
         },
         document_path: {
             type: DataTypes.STRING(255),

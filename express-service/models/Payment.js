@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Payment.belongsTo(models.LoanProduct, { foreignKey: 'id' });
-            Payment.belongsTo(models.Customer, { foreignKey: 'id' });
+            Payment.belongsTo(models.LoanProduct, { foreignKey: 'loan_product_id' });
+            Payment.belongsTo(models.Customer, { foreignKey: 'customer_id' });
+            Payment.hasMany(models.Document, { foreignKey: 'document_host_id' });
         }
     };
     //object relational mapping
@@ -31,11 +32,17 @@ module.exports = (sequelize, DataTypes) => {
         payment_date: {
             type: DataTypes.DATE,
         },
+        amount_all: {
+            type: DataTypes.DECIMAL(18, 2),
+        },
         amount_paid: {
             type: DataTypes.DECIMAL(18, 2),
         },
         remaining_balance: {
             type: DataTypes.DECIMAL(18, 2),
+        },
+        status: {
+            type: DataTypes.STRING(50),
         },
     }, {
         sequelize,
