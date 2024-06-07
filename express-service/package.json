@@ -24,9 +24,10 @@
     "mysql2": "2.3.3",
     "node-fetch": "^3.3.2",
     "nodemon": "2.0.15",
+    "number-to-words": "^1.2.4",
     "pdf-lib": "^1.17.1",
-    "pg-hstore": "2.3.4",
     "pg": "8.7.1",
+    "pg-hstore": "2.3.4",
     "sequelize": "6.13.0",
     "sequelize-cli": "6.3.0"
   }

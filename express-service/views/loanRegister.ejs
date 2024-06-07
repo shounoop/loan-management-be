@@ -3,105 +3,136 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
 </head>
 
 <body>
-    <p style="margin-bottom: 3.0pt; text-align: center; tab-stops: 36.0pt;">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
-    <p style="text-align: center; tab-stops: 36.0pt;"><strong>Độc Lập - Tự do - Hạnh phúc</strong></p>
-    <p style="margin-bottom: 6.0pt; text-align: center; tab-stops: 36.0pt;"><span
-            style="font-size: 10.0pt;">&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;</span><span
-            style="font-size: 10.0pt;">&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;</span></p>
-    <p style="margin-bottom: 6.0pt; text-align: center;"><strong><span style="font-size: 16.0pt;">GIẤY ĐỀ NGHỊ VAY
-                VỐN</span></strong></p>
-    <p style="text-indent: -53.85pt; tab-stops: dotted 17.0cm; margin: 18.0pt 0cm 6.0pt 89.85pt;"><strong><em><u>Kính
-                    gửi </u></em>: Ngân hàng ABC - Sở giao dịch/phòng giao dịch/chi nhánh:</strong></p>
-    <p style="text-align: justify; tab-stops: 19.85pt; margin: 12.0pt 0cm 6.0pt 0cm;"><strong>Tôi/chúng tôi là:</strong>
-    </p>
-    <ul>
-        <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
-                </span></span>Họ và tên: <%= loan.name%>
-        </li>
-        <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
-                </span>Giấy CMND số:</span>
-            <%= loan.cmnd%>
-        </li>
-        <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
-                </span></span>Hộ khẩu thường trú: <%= loan.address%>
-        </li>
-        <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
-                </span></span>Địa chỉ hiện tại: <%= loan.address%>
-        </li>
-        <li><span style="font: 7.0pt 'Times New Roman';"> </span><span></span>Điện thoại nhà riêng: ###<span>Điện thoại
-                di
-                động: <%= loan.phoneNumber%></span> </li>
-    </ul>
-    <p style="text-align: justify; tab-stops: 19.85pt; margin: 12.0pt 0cm 6.0pt 0cm;"><strong>Đề nghị ngân hàng cho
-            tôi/chúng tôi vay vốn với nội dung như sau: </strong></p>
-    <ol>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
-                    style="font: 7.0pt 'Times New Roman';"> </span></span><span
-                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span>Số tiền vay: <%= loan.amount%>
-                </span><span>Bằng
-                    chữ: <%= loan.amount%></span> </span></li>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
-                    style="font: 7.0pt 'Times New Roman';"> </span></span><span
-                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Mục đích sử dụng tiền vay: <%=
-                    loan.reason%> </span>
-        </li>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
-                    style="font: 7.0pt 'Times New Roman';"> </span></span><span
-                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Thời hạn vay: ###</span></li>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
-                    style="font: 7.0pt 'Times New Roman';"> </span></span><span
-                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Tài sản đảm bảo cho khoản vay là: <%=
-                    loan.value%>
-    </ol>
-    <ol start="5">
-        <li><span style="font-size: 12.0pt; line-height: 110%; font-family: 'Times New Roman',serif;"><span
-                    style="font: 7.0pt 'Times New Roman';"> </span></span><span
-                style="font-size: 12.0pt; line-height: 110%; font-family: 'Times New Roman',serif;">Thông tin về tính
-                khả thi, hiệu quả của hoạt động sản xuất kinh doanh và dịch vụ, tính khả thi của hoạt dộng đời sống liên
-                quan đến mục đích sử dụng vốn:
-                .........................................................................</span>
-    </ol>
-    <ul>
-        <li><span style="font-size: 12.0pt; line-height: 105%; font-family: 'Calibri',sans-serif;"><span
-                    style="font: 7.0pt 'Times New Roman';"> </span></span><span
-                style="font-size: 12.0pt; line-height: 105%; font-family: 'Times New Roman',serif;">Các nguồn dự kiến
-                dùng để trả nợ:.............................................................................
-                ..................................................................... </span>
-        </li>
-    </ul>
+        <p style="margin-bottom: 3.0pt; text-align: center; tab-stops: 36.0pt;">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
+        <p style="text-align: center; tab-stops: 36.0pt;"><strong>Độc Lập - Tự do - Hạnh phúc</strong></p>
+        <p style="margin-bottom: 6.0pt; text-align: center; tab-stops: 36.0pt;"><span
+                        style="font-size: 10.0pt;">&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;</span><span
+                        style="font-size: 10.0pt;">&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;&ndash;</span>
+        </p>
+        <p style="margin-bottom: 6.0pt; text-align: center;"><strong><span style="font-size: 16.0pt;">GIẤY ĐỀ NGHỊ VAY
+                                VỐN</span></strong></p>
+        <p style="text-indent: -53.85pt; tab-stops: dotted 17.0cm; margin: 18.0pt 0cm 6.0pt 89.85pt;">
+                <strong><em><u>Kính
+                                        gửi </u></em>: Ngân hàng ABC - Sở giao dịch/phòng giao dịch/chi nhánh:
+                        ABC</strong>
+        </p>
+        <p style="text-align: justify; tab-stops: 19.85pt; margin: 12.0pt 0cm 6.0pt 0cm;"><strong>Tôi/chúng tôi
+                        là:</strong>
+        </p>
+        <ul>
+                <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
+                                </span></span>Họ và tên: <%= loan.name%>
+                </li>
+                <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
+                                </span>Giấy CMND số:</span>
+                        <%= loan.cmnd%>
+                </li>
+                <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
+                                </span></span>Hộ khẩu thường trú: <%= loan.cmnd_add%>
+                </li>
+                <li><span style="font-family: '@MingLiU_HKSCS',serif;"><span style="font: 7.0pt 'Times New Roman';">
+                                </span></span>Địa chỉ hiện tại: <%= loan.now_add%>
+                </li>
+                <li><span style="font: 7.0pt 'Times New Roman';"> </span><span></span>Email: <%= loan.email%>
+                                &ndash;&ndash;
+                                <span>Điện thoại di động: <%= loan.phoneNumber%></span> </li>
+        </ul>
+        <p style="text-align: justify; tab-stops: 19.85pt; margin: 12.0pt 0cm 6.0pt 0cm;"><strong>Đề nghị ngân hàng cho
+                        tôi/chúng tôi vay vốn với nội dung như sau: </strong></p>
+        <ol>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
+                                        style="font: 7.0pt 'Times New Roman';"> </span></span><span
+                                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span>Số tiền vay: <%=
+                                                loan.amount%> (đồng)
+                                </span><span>Bằng
+                                        chữ: <%= loan.amount_word%> (đồng)</span> </span></li>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
+                                        style="font: 7.0pt 'Times New Roman';"> </span></span><span
+                                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Mục đích sử dụng tiền
+                                vay: <%= loan.assets%> </span>
+                </li>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
+                                        style="font: 7.0pt 'Times New Roman';"> </span></span><span
+                                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Thời hạn vay: <%=
+                                        loan.term%>
+                        </span></li>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;"><span
+                                        style="font: 7.0pt 'Times New Roman';"> </span></span><span
+                                style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Tài sản đảm bảo cho
+                                khoản vay là: <%= loan.value%>
+        </ol>
+        <ol start="5">
+                <li><span style="font-size: 12.0pt; line-height: 110%; font-family: 'Times New Roman',serif;"><span
+                                        style="font: 7.0pt 'Times New Roman';"> </span></span><span
+                                style="font-size: 12.0pt; line-height: 110%; font-family: 'Times New Roman',serif;">Thông
+                                tin về tính
+                                khả thi, hiệu quả của hoạt động sản xuất kinh doanh và dịch vụ, tính khả thi của hoạt
+                                dộng đời sống liên
+                                quan đến mục đích sử dụng vốn:
+                                .......................................................................................................................................................................................
+                                .......................................................................................................................................................................................</span>
+        </ol>
+        <ul>
+                <li><span style="font-size: 12.0pt; line-height: 105%; font-family: 'Calibri',sans-serif;"><span
+                                        style="font: 7.0pt 'Times New Roman';"> </span></span><span
+                                style="font-size: 12.0pt; line-height: 105%; font-family: 'Times New Roman',serif;">
+                                <span>Các
+                                        nguồn dự kiến dùng để trả
+                                        nợ:</span>
+                                ...................................................................................................................................................................................
+                                .....................................................................................................................................................................................
+                                .....................................................................................................................................................................................
+                        </span>
+                </li>
+        </ul>
 
-    <ul>
-        <li><span style="font-size: 12.0pt; line-height: 105%; font-family: 'Times New Roman',serif;">Lợi ích từ việc
-                thực hiện các hoạt động sử dụng vốn vay:.........................................</span></li>
-    </ul>
-    <p style="text-align: justify; tab-stops: 19.85pt; margin: 6.0pt 0cm 6.0pt 19.85pt;"><strong>Chúng tôi xin cam
-            đoan:</strong></p>
-    <ol>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Tất cả các hồ sơ, thông tin, tài liệu
-                mà chúng tôi cung cấp cho Ngân hàng là đúng sự thật </span></li>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Sử dụng vốn đúng mục đích và tự chịu
-                trách nhiệm nếu sử dụng vốn sai mục đích</span></li>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Sử dụng mọi tài sản thuộc quyền sở
-                hữu, sử dụng hợp pháp của mình để thanh toán nợ gốc, lãi và các nghĩa vụ tài chính khác cho Bên Ngân
-                hàng đầy đủ, đúng hạn. Đến hạn trả nợ mà chúng tôi không trả được nợ, Ngân hàng có toàn quyền xử lý tài
-                sản bảo đảm và thực hiện tất cả các biện pháp cần thiết khác để thu hồi nợ vay. </span></li>
-        <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Chấp hành nghiêm túc các quy định,
-                yêu cầu của Bên Ngân hàng về vay vốn, bảo đảm tiền vay trong suốt quá trình vay vốn; thực hiện đúng các
-                nghĩa vụ đã thỏa thuận với Bên Ngân hàng.</span></li>
-    </ol>
-    <p style="text-align: justify; tab-stops: 19.85pt; margin: 12.0pt 0cm 6.0pt 19.85pt;"><strong>Nếu vi phạm các cam
-            kết trên, chúng tôi xin hoàn toàn chịu trách nhiệm trước pháp luật</strong></p>
-    <p style="text-align: center; margin: 12.0pt 0cm .0001pt 180.0pt;"><em>###<span>,
-                ngày</span>###<span>tháng</span>###<span>năm</span>###</em></p>
-    <p style="text-align: center; margin: 6.0pt 0cm .0001pt 180.0pt;">NGƯỜI ĐỀ NGHỊ</p>
-    <p style="text-align: center; tab-stops: center 4.0cm 357.5pt; margin: 0cm 0cm 6.0pt 180.0pt;"><span
-            style="font-size: 10.0pt;">(Ký và ghi rõ họ tên)</span></p>
+        <ul>
+                <li><span style="font-size: 12.0pt; line-height: 105%; font-family: 'Times New Roman',serif;">Lợi ích từ
+                                việc thực hiện các hoạt động sử dụng vốn vay:
+                                ....................................................................................................................................................................................</span>
+                        ............................................................................................................................................................................................
+                </li>
+
+        </ul>
+        <p style="text-align: justify; tab-stops: 19.85pt; margin: 6.0pt 0cm 6.0pt 19.85pt;"><strong>Chúng tôi xin cam
+                        đoan:</strong></p>
+        <ol>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Tất cả các hồ sơ, thông tin,
+                                tài liệu
+                                mà chúng tôi cung cấp cho Ngân hàng là đúng sự thật </span></li>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Sử dụng vốn đúng mục đích và
+                                tự chịu
+                                trách nhiệm nếu sử dụng vốn sai mục đích</span></li>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Sử dụng mọi tài sản thuộc
+                                quyền sở
+                                hữu, sử dụng hợp pháp của mình để thanh toán nợ gốc, lãi và các nghĩa vụ tài chính khác
+                                cho Bên Ngân
+                                hàng đầy đủ, đúng hạn. Đến hạn trả nợ mà chúng tôi không trả được nợ, Ngân hàng có toàn
+                                quyền xử lý tài
+                                sản bảo đảm và thực hiện tất cả các biện pháp cần thiết khác để thu hồi nợ vay. </span>
+                </li>
+                <li><span style="font-size: 12.0pt; font-family: 'Times New Roman',serif;">Chấp hành nghiêm túc các quy
+                                định,
+                                yêu cầu của Bên Ngân hàng về vay vốn, bảo đảm tiền vay trong suốt quá trình vay vốn;
+                                thực hiện đúng các
+                                nghĩa vụ đã thỏa thuận với Bên Ngân hàng.</span></li>
+        </ol>
+        <p style="text-align: justify; tab-stops: 19.85pt; margin: 12.0pt 0cm 6.0pt 19.85pt;"><strong>Nếu vi phạm các
+                        cam
+                        kết trên, chúng tôi xin hoàn toàn chịu trách nhiệm trước pháp luật</strong></p>
+        <p style="text-align: center; margin: 12.0pt 0cm .0001pt 180.0pt;"><em>
+                        <%= loan.date%><span>, ngày</span>
+                                <%= loan.day%><span> tháng <%= loan.month%></span><span> năm <%= loan.year%></span>
+                </em></p>
+        <p style="text-align: center; margin: 6.0pt 0cm .0001pt 180.0pt;">NGƯỜI ĐỀ NGHỊ</p>
+        <p style="text-align: center; tab-stops: center 4.0cm 357.5pt; margin: 0cm 0cm 6.0pt 180.0pt;"><span
+                        style="font-size: 10.0pt;">(Ký và ghi rõ họ tên)</span></p>
 
 </body>
 

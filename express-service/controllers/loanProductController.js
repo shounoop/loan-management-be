@@ -1,4 +1,5 @@
-import LoanProductService from '../services/loanProductService'
+
+const LoanProductService = require('../services/loanProductService')
 let createLoanProduct = async (req, res) => {
     try {
         let infor = await LoanProductService.createLoanProduct(req.body);
@@ -25,7 +26,7 @@ let getAllLoanProduct = async (req, res) => {
 }
 let getLoanProductById = async (req, res) => {
     try {
-        let infor = await LoanProductService.getAllLoanProduct(req.query.id);
+        let infor = await LoanProductService.getLoanProductById(req.query.id);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
