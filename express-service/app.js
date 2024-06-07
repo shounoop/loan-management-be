@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 const database = require('./models');
 const initWebRouters = require('./routes/web')
+const viewEngine = require('./configs/viewEngine')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
@@ -17,6 +18,7 @@ database.sequelize.authenticate().then(() => {
 
 app.use('/api/v1', require('./routes'));
 initWebRouters(app)
+viewEngine(app)
 app.get('/api/express-to-spring', async (req, res) => {
 	try {
 		const response = await axios.get('http://spring-service:8080/api/hello');
