@@ -8,12 +8,8 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            loan_product_id: {
+            document_host_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
-            },
-            document_type: {
-                type: Sequelize.STRING(50),
                 allowNull: false,
             },
             document_path: {

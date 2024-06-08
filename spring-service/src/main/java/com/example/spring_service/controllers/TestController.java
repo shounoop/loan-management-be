@@ -1,15 +1,18 @@
 package com.example.spring_service.controllers;
 
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//for Angular Client (withCredentials)
-//@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials="true")
-@CrossOrigin(origins = "*", maxAge = 3600)
+//for Next.js Client (withCredentials)
+//@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*", exposedHeaders = HttpHeaders.SET_COOKIE)
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+
 @RestController
 @RequestMapping("/api/test")
 public class TestController {

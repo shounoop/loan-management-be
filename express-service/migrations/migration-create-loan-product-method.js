@@ -16,6 +16,10 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
+            loan_type_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
             createdAt: {
                 allowNull: true,
                 type: Sequelize.DATE

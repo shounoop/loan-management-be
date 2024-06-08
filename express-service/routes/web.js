@@ -1,9 +1,12 @@
 const express = require('express')
+const AWS = require('aws-sdk')
+require(`dotenv`).config();
 const loanTypeController = require('../controllers/loanTypeController')
 const loanProductController = require('../controllers/loanProductController')
 const documentStorage = require('../middlewares/documentStorage')
 const loanMethodController = require('../controllers/loanMethodController')
 import { sendSimpleEmail } from '../services/emailService'
+import { uploadFile } from '../middlewares/AWSController';
 let router = express.Router();
 
 //set multer to upload file
@@ -13,6 +16,8 @@ const storage = multer.diskStorage({
         cb(null, file.originalname)
     }
 })
+const Bucket = process.env.BUCKET_NAME
+const s3 = new AWS.S3()
 const upload = multer({ storage })
 let initWebRouters = (app) => {
 
@@ -56,6 +61,21 @@ let initWebRouters = (app) => {
                 EM: 'Error from server'
             })
         }
+    })
+    // test aws connection
+    router.post('/api/upload', upload.any(), async (req, res) => {
+        try {
+            console.log(req.files)
+            await uploadFile(req.files[0].path, Bucket, req.files[0].filename)
+            res.send('Successful uploaded' + 'location')
+        } catch (error) {
+            console.log(error)
+        }
+    })
+    router.get('/api/download/filename', async (req, res) => {
+        const filename = req.query.filename
+        let x = await s3.getObject({ Bucket: Bucket, Key: filename }).promise();
+        res.send(x.Body)
     })
 
     return app.use("/", router)
