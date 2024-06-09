@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../models/index');
-const customerModel = db['Customer']
+const customerModel = db['Customer'];
 
 const getAllCustomers = async () => {
   const allCustomers = await customerModel.findAll();
@@ -10,6 +10,32 @@ const getAllCustomers = async () => {
   } else {
     return JSON.stringify(allCustomers);
   }
+}
+
+const getTotalCustomer = async () => {
+  const totalCustomer = await customerModel.count();
+  return totalCustomer;
+}
+
+const getTotalCustomerByDate = async (queryDate) => {
+  const [results, metadata] = await db.sequelize.query('SELECT COUNT(*) AS total_customer FROM customer WHERE DATE(createdAt)=?', {
+    replacements: [queryDate]
+  })
+  return results[0]['total_customer']
+}
+
+const getTotalCustomerByYear = async (queryYear) => {
+  const [results, metadata] = await db.sequelize.query('SELECT MONTH(createdAt) AS month, COUNT(*) AS total_customer FROM customer WHERE YEAR(createdAt)=? GROUP BY MONTH(createdAt)', {
+    replacements: [queryYear]
+  })
+  return results
+}
+
+const getTotalCustomerOfOneMonthInOneYear = async (queryMonth, queryYear) => {
+  const [results, metadata] = await db.sequelize.query('SELECT COUNT(*) AS total_customer FROM customer WHERE MONTH(createdAt)=? AND YEAR(createdAt)=?', {
+    replacements: [queryMonth, queryYear]
+  })
+  return results[0]['total_customer']
 }
 
 const getCustomerById = async (customerId) => {
@@ -56,6 +82,10 @@ const deleteOneCustomer = async (customerId) => {
 module.exports = {
   getAllCustomers,
   getCustomerById,
+  getTotalCustomer,
+  getTotalCustomerByDate,
+  getTotalCustomerByYear,
+  getTotalCustomerOfOneMonthInOneYear,
   createCustomer,
   updateCustomer,
   deleteOneCustomer
