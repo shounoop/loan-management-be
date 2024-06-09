@@ -18,6 +18,38 @@ const getPaymentOfCustomer = async (req, res, next) => {
   })
 }
 
+const getTotalOfPayment = async (req, res, next) => {
+  const totalPayment = await paymentDaos.getTotalOfPayment();
+  res.status(200).json({
+    message: "Successfully get total of payment",
+    metadata: totalPayment
+  })
+}
+
+const getTotalOfPaymentByDate = async (req, res, next) => {
+  const totalPaymentDaily = await paymentDaos.getTotalOfPaymentByDate(req.params.date);
+  res.status(200).json({
+    message: "Successfully get total of payment daily",
+    metadata: totalPaymentDaily
+  })
+}
+
+const getTotalOfPaymentByYear = async (req, res, next) => {
+  const totalPaymentMonthly = await paymentDaos.getTotalOfPaymentByYear(req.params.year);
+  res.status(200).json({
+    message: "Successfully get total of payment monthly",
+    metadata: totalPaymentMonthly
+  })
+}
+
+const getTotalOfPaymentOfOneMonthInOneYear = async (req, res, next) => {
+  const totalPaymentMonthly = await paymentDaos.getTotalOfPaymentOfOneMonthInOneYear(req.params.month, req.params.year);
+  res.status(200).json({
+    message: "Successfully get total of payment by month",
+    metadata: totalPaymentMonthly
+  })
+}
+
 const getPaymentById = async (req, res, next) => {
   const paymentDetail = await paymentService.getPaymentById(Number.parseInt(req.params.paymentId));
   res.status(200).json({
@@ -34,11 +66,11 @@ const createNewPayment = async (req, res, next) => {
   })
 }
 
-const updatePayment = async(req, res, next) => {
+const updatePayment = async (req, res, next) => {
   const updateResult = await paymentDaos.updatePayment(Number.parseInt(req.params.paymentId), req.body);
   res.status(200).json({
     message: "Successfully update payment",
-    metadata: updateResult
+    metadata: updateResult[0]
   })
 }
 
@@ -53,6 +85,10 @@ const deletePaymentById = async (req, res, next) => {
 module.exports = {
   getAllPayments,
   getPaymentOfCustomer,
+  getTotalOfPayment,
+  getTotalOfPaymentByDate,
+  getTotalOfPaymentByYear,
+  getTotalOfPaymentOfOneMonthInOneYear,
   getPaymentById,
   createNewPayment,
   updatePayment,

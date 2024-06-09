@@ -48,12 +48,13 @@ const getPaymentById = async (paymentId) => {
 }
 
 const createNewPayment = async (newPaymentData) => {
-  const { customerId, loanProductId } = newPaymentData
+  console.log(newPaymentData)
+  const { loan_product_id, customer_id } = newPaymentData
 
   // 1. Check if loan product exist in DB
 
   // 2. Check if customer exist in DB
-  const foundCustomer = await userDaos.getCustomerById(customerId);
+  const foundCustomer = await userDaos.getCustomerById(customer_id);
 
   const newPayment = await paymentDaos.createNewPayment(newPaymentData);
   return newPayment
