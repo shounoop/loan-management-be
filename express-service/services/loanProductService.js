@@ -1,5 +1,7 @@
-const { resolve } = require("bluebird")
-const db = require("../models")
+const { resolve } = require("bluebird");
+const paymentDaos = require('../daos/payment');
+const loanProductDaos = require('../daos/loanProduct');
+const db = require("../models");
 
 let createLoanProduct = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -174,7 +176,30 @@ let checkRequiredFields = (data) => {
         element: element
     }
 }
+const getMostSoldLoanProductByYear = async (queryYear) => {
+    const totalPaymentOfEachLoanProduct = await paymentDaos.getTotalPaymentOfEachLoanProduct(queryYear);
+    if (totalPaymentOfEachLoanProduct == []) {
+        throw new Error("No total payment and loan product id found!");
+    }
+    const loanProductId = totalPaymentOfEachLoanProduct[0]['loan_product_id'];
+    const loanProduct = await loanProductDaos.getLoanProductById(loanProductId);
+    return loanProduct
+}
+const getMostSoldLoanProductByMonthInAYear = async (queryYear, queryMonth) => {
+    const totalPaymentOfEachLoanProductByMonth = await paymentDaos.getTotalPaymentEachLoanProductByMonth(queryYear, queryMonth);
+    if (totalPaymentOfEachLoanProductByMonth == []) {
+        throw new Error("No total payment and loan product id found!");
+    }
+    const loanProductId = totalPaymentOfEachLoanProductByMonth[0]['loan_product_id'];
+    const loanProduct = await loanProductDaos.getLoanProductById(loanProductId);
+    return loanProduct
+}
 module.exports = {
-    createLoanProduct, getAllLoanProduct, getLoanProductById, editLoanProduct,
+    createLoanProduct, 
+    getAllLoanProduct, 
+    getLoanProductById, 
+    editLoanProduct,
     deleteLoanProduct,
+    getMostSoldLoanProductByYear,
+    getMostSoldLoanProductByMonthInAYear
 }
