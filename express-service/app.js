@@ -16,7 +16,7 @@ database.sequelize.authenticate().then(() => {
 	console.log(err)
 })
 
-app.use('/api/v1', require('./routes'));
+app.use('/api', require('./routes'));
 initWebRouters(app)
 viewEngine(app)
 app.get('/api/express-to-spring', async (req, res) => {
