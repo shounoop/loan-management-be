@@ -1,6 +1,6 @@
 package com.example.spring_service.controllers;
 
-// import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +13,8 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/api/express")
 public class ExpressController {
-    // @Value("${EXPRESS_SERVICE_URL}")
-    private String expressServiceUrl = "http://express-service:3000/api/v1";
+    @Value("${shounoop.app.expressServiceUrl}")
+    private String expressServiceUrl;
 
     private final RestTemplate restTemplate;
 
