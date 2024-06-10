@@ -61,7 +61,7 @@ public class ExpressController {
         return response;
     }
 
-    @PostMapping("/loan-method")
+    @PostMapping("/loan-methods")
     public ResponseEntity<String> createLoanMethod(@RequestBody LoanMethodCreatePayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.CREATE_LOAN_METHOD;
 
@@ -75,7 +75,7 @@ public class ExpressController {
         return response;
     }
 
-    @PutMapping("/loan-method")
+    @PutMapping("/loan-methods")
     public ResponseEntity<String> editLoanMethod(@RequestBody LoanMethodEditPayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.EDIT_LOAN_METHOD;
 
@@ -89,7 +89,7 @@ public class ExpressController {
         return response;
     }
 
-    @DeleteMapping("/loan-method/{id}")
+    @DeleteMapping("/loan-methods/{id}")
     public ResponseEntity<String> deleteLoanMethod(@PathVariable("id") Integer id) {
         String url = expressServiceUrl + EExpressApiUrl.DELETE_LOAN_METHOD;
 
