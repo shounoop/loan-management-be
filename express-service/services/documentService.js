@@ -172,7 +172,34 @@ let checkRequiredFields = (data) => {
         element: element
     }
 }
+let savefile = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.fileName || !data.id) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+            } else {
+                for (const file of data.fileName) {
+                    await db.Document.create({
+                        document_host_id: data.id,
+                        document_path: file,
+
+                    })
+                }
+                resolve({
+                    EC: 0,
+                    EM: 'Save fils successfully'
+                })
+            }
+
+        } catch (error) {
+            reject(e)
+        }
+    })
+}
 module.exports = {
     createDocument, getAllDocument, getDocumentById, editDocument,
-    deleteDocument,
+    deleteDocument, savefile
 }
