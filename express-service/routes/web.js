@@ -5,8 +5,9 @@ const loanTypeController = require('../controllers/loanTypeController')
 const loanProductController = require('../controllers/loanProductController')
 const documentStorage = require('../middlewares/documentStorage')
 const loanMethodController = require('../controllers/loanMethodController')
+const documentService = require('../services/documentService')
 import { sendSimpleEmail } from '../services/emailService'
-import { uploadFile } from '../middlewares/AWSController';
+import { uploadFile, downloadFileS3 } from '../middlewares/AWSController';
 let router = express.Router();
 
 //set multer to upload file
@@ -65,18 +66,40 @@ let initWebRouters = (app) => {
     // test aws connection
     router.post('/api/upload', upload.any(), async (req, res) => {
         try {
-            console.log(req.files)
-            await uploadFile(req.files[0].path, Bucket, req.files[0].filename)
-            res.send('Successful uploaded' + 'location')
+            let fileName = []
+            if (req.files) {
+                for (const item of req.files) {
+                    let data = await uploadFile(item.path, Bucket, item.filename)
+                    fileName.push(data.key)
+                }
+                if (req.body.id) {
+                    let infor = await documentService.savefile({
+                        fileName: fileName,
+                        id: 1,
+                    })
+                    res.status(200).json({ infor })
+                } else {
+                    res.status(404).json({
+                        EC: 1,
+                        EM: 'Cannot find object'
+                    })
+                }
+            } else {
+                res.status(200).json({
+                    EC: 1,
+                    EM: 'Not any file uploaded'
+                })
+            }
+
         } catch (error) {
             console.log(error)
+            return res.status(500).json({
+                EC: -1,
+                EM: 'Error from server'
+            })
         }
     })
-    router.get('/api/download/filename', async (req, res) => {
-        const filename = req.query.filename
-        let x = await s3.getObject({ Bucket: Bucket, Key: filename }).promise();
-        res.send(x.Body)
-    })
+    router.get('/api/download/filename', downloadFileS3)
 
     return app.use("/", router)
 

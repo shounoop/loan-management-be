@@ -59,6 +59,7 @@ let deleteDocument = async (req, res) => {
         })
     }
 }
+
 module.exports = {
     createDocument, getAllDocument, getDocumentById, editDocument, deleteDocument,
 }

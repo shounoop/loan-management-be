@@ -31,6 +31,9 @@ module.exports = {
                 type: Sequelize.DECIMAL(18, 2),
                 allowNull: false,
             },
+            payment_status: {
+                type: DataTypes.STRING(50),
+            },
             createdAt: {
                 allowNull: true,
                 type: Sequelize.DATE
