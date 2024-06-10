@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         remaining_balance: {
             type: DataTypes.DECIMAL(18, 2),
         },
-        status: {
+        payment_status: {
             type: DataTypes.STRING(50),
         },
     }, {
