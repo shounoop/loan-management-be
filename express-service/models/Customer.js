@@ -45,6 +45,17 @@ module.exports = (sequelize, DataTypes) => {
         occupation: {
             type: DataTypes.STRING(100),
         },
+        customer_status: {
+            type: DataTypes.STRING(20)
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     }, {
         sequelize,
         timestamps: true,

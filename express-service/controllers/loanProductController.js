@@ -76,7 +76,7 @@ const getTotalLoanProductByYear = async (req, res, next) => {
         metadata: totalLoanProductByYear
     })
 }
-const getTotalLoanProductOfOneMonthOfOneYear = async(req, res, next) => {
+const getTotalLoanProductOfOneMonthOfOneYear = async (req, res, next) => {
     const totalLoanProductOfOneMonthOfOneYear = await loanProductDaos.getTotalLoanProductOfOneMonthOfOneYear(req.params.year, req.params.month);
     return res.status(200).json({
         message: "Succesfully get total of loan product of one month of one year",
@@ -95,13 +95,13 @@ const getMostSoldLoanProductByMonthInAYear = async (req, res, next) => {
     return res.status(200).json({
         message: "Successfully get most sold loan product of a month in a year",
         metadata: mostSoldLoanProductByMonthInAYear
-    }) 
+    })
 }
 module.exports = {
-    createLoanProduct, 
-    getAllLoanProduct, 
-    getLoanProductById, 
-    editLoanProduct, 
+    createLoanProduct,
+    getAllLoanProduct,
+    getLoanProductById,
+    editLoanProduct,
     deleteLoanProduct,
     getTotalLoanProduct,
     getTotalLoanProductByYear,

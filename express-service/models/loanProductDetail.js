@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            LoanProductDetail.belongsTo(models.LoanProduct, { foreignKey: 'loan_product_id' });
-            LoanProductDetail.belongsTo(models.LoanMethod, { foreignKey: 'loan_method_id' });
-            LoanProductDetail.belongsTo(models.LoanType, { foreignKey: 'loan_type_id' })
+            LoanProductDetail.belongsTo(models.LoanProduct, { foreignKey: 'loan_product_id', targetKey: 'loan_product_id', as: 'Product' });
+            LoanProductDetail.belongsTo(models.LoanMethod, { foreignKey: 'loan_method_id', targetKey: 'loan_method_id', as: 'Method' });
+            LoanProductDetail.belongsTo(models.LoanType, { foreignKey: 'loan_type_id', targetKey: 'loan_type_id', as: 'Type' })
         }
     };
     //object relational mapping
@@ -32,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         loan_type_id: {
             type: DataTypes.INTEGER,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     }, {
         sequelize,
         timestamps: true,

@@ -31,7 +31,7 @@ let createHTML = async (req, res) => {
 
 
     }
-    res.render('loanRegister', { loan: loan })
+    res.render('loanContact', { loan: loan })
 }
 // Tạo file pdf từ trang html, lưu lên AWS- S3
 let generateReport = async (req, res) => {
@@ -62,7 +62,14 @@ let generateReport = async (req, res) => {
 
         const pdfBuffer = await page.pdf({
             // path: `${path.join(__dirname, '../assets', todayDate.getTime() + ".pdf")}`,
-            format: "A4"
+            format: "A4",
+            printBackground: true,
+            margin: {
+                top: "1cm",
+                bottom: "1cm",
+                left: "1cm",
+                right: "1cm"
+            }
         })
 
         await browser.close();

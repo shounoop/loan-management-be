@@ -2,7 +2,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('Payment', {
-            id: {
+            payment_id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
@@ -32,10 +32,10 @@ module.exports = {
                 allowNull: false,
             },
             payment_status: {
-                type: DataTypes.STRING(50),
+                type: Sequelize.STRING(50),
             },
             createdAt: {
-                allowNull: true,
+                allowNull: false,
                 type: Sequelize.DATE
             },
             updatedAt: {

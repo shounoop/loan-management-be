@@ -40,8 +40,11 @@ module.exports = {
             occupation: {
                 type: Sequelize.STRING(100),
             },
+            customer_status: {
+                type: Sequelize.STRING(20),
+            },
             createdAt: {
-                allowNull: true,
+                allowNull: false,
                 type: Sequelize.DATE
             },
             updatedAt: {
