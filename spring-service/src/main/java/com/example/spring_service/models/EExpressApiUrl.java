@@ -7,5 +7,14 @@ public class EExpressApiUrl {
     public static final String CREATE_LOAN_METHOD = "/create-loan-method";
     public static final String EDIT_LOAN_METHOD = "/edit-loan-method";
     public static final String DELETE_LOAN_METHOD = "/delete-loan-method";
-
+    public static final String GET_LOAN_TYPES = "/get-all-loan-type";
+    public static final String GET_LOAN_TYPE_BY_ID = "/get-loan-type-by-id";
+    public static final String CREATE_LOAN_TYPE = "/create-loan-type";
+    public static final String EDIT_LOAN_TYPE = "/edit-loan-type";
+    public static final String DELETE_LOAN_TYPE = "/delete-loan-type";
+    public static final String GET_LOAN_PRODUCTS = "/get-all-loan-product";
+    public static final String GET_LOAN_PRODUCT_BY_ID = "/get-loan-product-by-id";
+    public static final String CREATE_LOAN_PRODUCT = "/create-loan-product";
+    public static final String EDIT_LOAN_PRODUCT = "/edit-loan-product";
+    public static final String DELETE_LOAN_PRODUCT = "/delete-loan-product";
 }
