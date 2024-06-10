@@ -195,9 +195,9 @@ const getMostSoldLoanProductByMonthInAYear = async (queryYear, queryMonth) => {
     return loanProduct
 }
 module.exports = {
-    createLoanProduct, 
-    getAllLoanProduct, 
-    getLoanProductById, 
+    createLoanProduct,
+    getAllLoanProduct,
+    getLoanProductById,
     editLoanProduct,
     deleteLoanProduct,
     getMostSoldLoanProductByYear,

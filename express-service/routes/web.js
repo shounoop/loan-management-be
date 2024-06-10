@@ -6,8 +6,10 @@ const loanProductController = require('../controllers/loanProductController')
 const documentStorage = require('../middlewares/documentStorage')
 const loanMethodController = require('../controllers/loanMethodController')
 const documentService = require('../services/documentService')
-import { sendSimpleEmail } from '../services/emailService'
-import { uploadFile, downloadFileS3 } from '../middlewares/AWSController';
+const loanProductDetailController = require('../controllers/loanProductDetailController')
+const AWSController = require('../middlewares/AWSController');
+const emailService = require('../services/emailService')
+const uploadFile = require('../middlewares/AWSController')
 let router = express.Router();
 
 //set multer to upload file
@@ -36,6 +38,13 @@ let initWebRouters = (app) => {
     router.put('/api/edit-loan-product', loanProductController.editLoanProduct)
     router.delete('/api/delete-loan-product', loanProductController.deleteLoanProduct)
 
+    //LoanProduct
+    router.post('/api/create-loan-product-detail', loanProductDetailController.createLoanProductDetail)
+    router.get('/api/get-all-loan-product-detail', loanProductDetailController.getAllLoanProductDetail)
+    router.get('/api/get-loan-product-detail-by-id', loanProductDetailController.getLoanProductDetailById)
+    router.put('/api/edit-loan-product-detail', loanProductDetailController.editLoanProductDetail)
+    router.delete('/api/delete-loan-product-detail', loanProductDetailController.deleteLoanProductDetail)
+
     //LoanMethod
     router.post('/api/create-loan-method', loanMethodController.createLoanMethod)
     router.get('/api/get-all-loan-method', loanMethodController.getAllLoanMethod)
@@ -43,14 +52,14 @@ let initWebRouters = (app) => {
     router.put('/api/edit-loan-method', loanMethodController.editLoanMethod)
     router.delete('/api/delete-loan-method', loanMethodController.deleteLoanMethod)
     //Document
-    router.post('/api/create', documentStorage.createHTML)
-    router.post('/api/generate', documentStorage.generateReport)
+    router.get('/api/create', documentStorage.createHTML)
+    router.get('/api/generate', documentStorage.generateReport)
 
     //send mail testing
     router.post('/api/sendEmail', async (req, res) => {
 
         try {
-            await sendSimpleEmail(req.body)
+            await emailService.sendSimpleEmail(req.body)
             return res.status(200).json({
                 EC: 0,
                 EM: 'Send email successfully',
@@ -99,7 +108,7 @@ let initWebRouters = (app) => {
             })
         }
     })
-    router.get('/api/download/filename', downloadFileS3)
+    router.get('/api/download/filename', AWSController.downloadFileS3)
 
     return app.use("/", router)
 
