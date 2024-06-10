@@ -19,6 +19,10 @@ module.exports = {
             payment_date: {
                 type: Sequelize.DATE,
             },
+            amount_all: {
+                type: Sequelize.DECIMAL(18, 2),
+                allowNull: false,
+            },
             amount_paid: {
                 type: Sequelize.DECIMAL(18, 2),
                 allowNull: false,
@@ -26,6 +30,9 @@ module.exports = {
             remaining_balance: {
                 type: Sequelize.DECIMAL(18, 2),
                 allowNull: false,
+            },
+            payment_status: {
+                type: DataTypes.STRING(50),
             },
             createdAt: {
                 allowNull: true,

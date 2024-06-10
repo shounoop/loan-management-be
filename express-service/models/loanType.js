@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            LoanType.hasMany(models.LoanProductType, { foreignKey: 'id' });
+            LoanType.hasMany(models.LoanProductDetail, { foreignKey: 'loan_type_id' });
         }
     };
     //object relational mapping

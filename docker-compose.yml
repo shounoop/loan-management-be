@@ -8,7 +8,7 @@ services:
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
     environment:
-      SPRING_APPLICATION_JSON: '{ "spring.datasource.url"  : "jdbc:mysql://spring-db:$MYSQLDB_DOCKER_PORT/$SPRING_MYSQLDB_DATABASE?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false", "spring.datasource.username" : "$SPRING_MYSQLDB_USERNAME", "spring.datasource.password" : "$SPRING_MYSQLDB_ROOT_PASSWORD", "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect", "spring.jpa.hibernate.ddl-auto" : "update" }'
+      SPRING_APPLICATION_JSON: '{ "spring.datasource.url"  : "jdbc:mysql://spring-db:$MYSQLDB_DOCKER_PORT/$SPRING_MYSQLDB_DATABASE?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false", "spring.datasource.username" : "$SPRING_MYSQLDB_USERNAME", "spring.datasource.password" : "$SPRING_MYSQLDB_ROOT_PASSWORD", "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect", "spring.jpa.hibernate.ddl-auto" : "update", "shounoop.app.jwtCookieName" : "shounoop", "shounoop.app.jwtSecret" : "mtuCT9rfHdCHgc4Ieq1eogXi0Ur0b7U3f123243432423", "shounoop.app.jwtExpirationMs" : "86400000", "shounoop.app.expressServiceUrl" : "http://express-service:3000/api" }'
     volumes:
       - .m2:/root/.m2 # mount the local maven repository to the container to avoid downloading dependencies every time the container starts
     networks:
@@ -34,6 +34,7 @@ services:
 
   express-service:
     build: ./express-service
+    restart: always # restart the container always if it stops 
     env_file: ./.env
     ports:
       - $EXPRESS_LOCAL_PORT:$EXPRESS_DOCKER_PORT
@@ -44,6 +45,12 @@ services:
       DB_DATABASE_NAME: $EXPRESS_MYSQLDB_DATABASE
       DB_DIALECT: $EXPRESS_MYSQLDB_DIALLCT
       DB_SSL: $EXPRESS_MYSQLDB_SSL
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY_ID: $AWS_SECRET_ACCESS_KEY_ID
+      AWS_REGION: $AWS_REGION
+      BUCKET_NAME: $BUCKET_NAME
+      EMAIL_APP_PASSWORD: $EMAIL_APP_PASSWORD
+      EMAIL_APP: $EMAIL_APP
     depends_on:
       - express-db
     networks:

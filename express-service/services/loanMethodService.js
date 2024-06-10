@@ -1,18 +1,18 @@
 const { resolve } = require("bluebird")
 const db = require("../models")
 
-let createLoanType = (data) => {
+let createLoanMethod = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.loan_type_name || !data.loan_type_desc) {
+            if (!data.loan_method_name || !data.loan_method_desc) {
                 resolve({
                     EC: 1,
-                    EM: 'Missing parameter'
+                    EM: 'Missing parameter 1'
                 })
             } else {
-                await db.LoanType.create({
-                    loan_type_name: data.loan_type_name,
-                    loan_type_desc: data.loan_type_desc,
+                await db.LoanMethod.create({
+                    loan_method_name: data.loan_method_name,
+                    loan_method_desc: data.loan_method_desc,
                 })
                 resolve({
                     EC: 0,
@@ -24,10 +24,10 @@ let createLoanType = (data) => {
         }
     })
 }
-let getAllLoanType = () => {
+let getAllLoanMethod = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let data = await db.LoanType.findAll({
+            let data = await db.LoanMethod.findAll({
             });
             resolve({
                 EC: 0,
@@ -39,7 +39,7 @@ let getAllLoanType = () => {
         }
     })
 }
-let getLoanTypeById = (id) => {
+let getLoanMethodById = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!id) {
@@ -48,9 +48,9 @@ let getLoanTypeById = (id) => {
                     errMessage: 'Missing parameter'
                 })
             } else {
-                let data = await db.LoanType.findOne({
+                let data = await db.LoanMethod.findOne({
                     where: {
-                        loan_type_id: id
+                        loan_method_id: id
                     },
                 })
                 resolve({
@@ -65,23 +65,23 @@ let getLoanTypeById = (id) => {
         }
     })
 }
-let editLoanType = (data) => {
+let editLoanMethod = (data) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            if (!data.loan_type_name || !data.loan_type_desc || !data.loan_type_id) {
+            if (!data.loan_method_name || !data.loan_method_desc || !data.loan_method_id) {
                 resolve({
                     EC: 1,
-                    EM: 'Missing parameter '
+                    EM: 'Missing parameter'
                 })
             } else {
-                let check = await db.LoanType.findOne({
-                    where: { loan_type_id: data.loan_type_id },
+                let check = await db.LoanMethod.findOne({
+                    where: { loan_method_id: data.loan_method_id },
                     raw: false,
                 })
                 if (check) {
-                    check.loan_type_name = data.loan_type_name;
-                    check.loan_type_desc = data.loan_type_desc;
+                    check.loan_method_name = data.loan_method_name;
+                    check.loan_method_desc = data.loan_method_desc;
                     check.save()
                     resolve({
                         EC: 0,
@@ -90,7 +90,7 @@ let editLoanType = (data) => {
                 } else {
                     resolve({
                         EC: 2,
-                        EM: 'LoanType is not found!'
+                        EM: 'LoanMethod is not found!'
                     })
                 }
 
@@ -100,7 +100,7 @@ let editLoanType = (data) => {
         }
     })
 }
-let deleteLoanType = (inputId) => {
+let deleteLoanMethod = (inputId) => {
     return new Promise(async (resolve, reject) => {
 
         try {
@@ -110,12 +110,12 @@ let deleteLoanType = (inputId) => {
                     errMessage: 'Missing parameter'
                 })
             } else {
-                let check = await db.LoanType.findOne({
-                    where: { loan_type_id: inputId },
+                let check = await db.LoanMethod.findOne({
+                    where: { loan_method_id: inputId },
                 })
                 if (check) {
-                    await db.LoanType.destroy({
-                        where: { loan_type_id: inputId }
+                    await db.LoanMethod.destroy({
+                        where: { loan_method_id: inputId }
                     })
                     resolve({
                         EC: 0,
@@ -124,7 +124,7 @@ let deleteLoanType = (inputId) => {
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'LoanType is not found!'
+                        errMessage: 'LoanMethod is not found!'
                     })
                 }
 
@@ -135,6 +135,6 @@ let deleteLoanType = (inputId) => {
     })
 }
 module.exports = {
-    createLoanType, getAllLoanType, getLoanTypeById, editLoanType,
-    deleteLoanType,
+    createLoanMethod, getAllLoanMethod, getLoanMethodById, editLoanMethod,
+    deleteLoanMethod,
 }

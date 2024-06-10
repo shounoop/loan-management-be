@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Role.hasMany(models.AdminRole, { foreignKey: 'id' });
+            Role.hasMany(models.AdminRole, { foreignKey: 'role_id' });
         }
     };
     //object relational mapping

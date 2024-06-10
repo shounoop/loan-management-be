@@ -1,4 +1,4 @@
-import DocumentService from '../services/documentService'
+const DocumentService = require('../services/documentService')
 let createDocument = async (req, res) => {
     try {
         let infor = await DocumentService.createDocument(req.body);
@@ -59,6 +59,7 @@ let deleteDocument = async (req, res) => {
         })
     }
 }
+
 module.exports = {
     createDocument, getAllDocument, getDocumentById, editDocument, deleteDocument,
 }

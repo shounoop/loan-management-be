@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class LoanProductType extends Model {
+    class LoanProductDetail extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -11,28 +11,32 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            LoanProductType.belongsTo(models.LoanType, { foreignKey: 'id' });
-            LoanProductType.belongsTo(models.LoanProduct, { foreignKey: 'id' });
+            LoanProductDetail.belongsTo(models.LoanProduct, { foreignKey: 'loan_product_id' });
+            LoanProductDetail.belongsTo(models.LoanMethod, { foreignKey: 'loan_method_id' });
+            LoanProductDetail.belongsTo(models.LoanType, { foreignKey: 'loan_type_id' })
         }
     };
     //object relational mapping
-    LoanProductType.init({
-        loan_product_type_id: {
+    LoanProductDetail.init({
+        loan_product_detail_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        loan_type_id: {
+        loan_product_id: {
             type: DataTypes.INTEGER,
         },
-        loan_product_id: {
+        loan_method_id: {
+            type: DataTypes.INTEGER,
+        },
+        loan_type_id: {
             type: DataTypes.INTEGER,
         },
     }, {
         sequelize,
         timestamps: true,
 
-        modelName: 'LoanProductType',
+        modelName: 'LoanProductDetail',
     });
-    return LoanProductType;
+    return LoanProductDetail;
 };
