@@ -48,7 +48,9 @@ const getCustomerById = async (customerId) => {
 }
 
 const createCustomer = async (customerInfo) => {
-  const newCustomer = await customerModel.create(customerInfo);
+  const newCustomer = await customerModel.create(customerInfo).then(data => data).catch(err => {
+    throw new Error(err)
+  })
   if (newCustomer == null) {
     throw new Error("Can't create new customer!");
   } else {

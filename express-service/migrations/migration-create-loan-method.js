@@ -16,7 +16,7 @@ module.exports = {
                 type: Sequelize.TEXT,
             },
             createdAt: {
-                allowNull: true,
+                allowNull: false,
                 type: Sequelize.DATE
             },
             updatedAt: {

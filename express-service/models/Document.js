@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
         document_path: {
             type: DataTypes.STRING(255),
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     }, {
         sequelize,
         timestamps: true,

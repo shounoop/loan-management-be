@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         permission: {
             type: DataTypes.STRING(50),
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
         }
     }, {
         sequelize,
