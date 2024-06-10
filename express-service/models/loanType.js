@@ -27,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
         loan_type_desc: {
             type: DataTypes.STRING(255),
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     }, {
         sequelize,
         timestamps: true,

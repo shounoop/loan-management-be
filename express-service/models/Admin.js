@@ -37,10 +37,17 @@ module.exports = (sequelize, DataTypes) => {
         last_login: {
             type: DataTypes.DATE,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     }, {
         sequelize,
         timestamps: true,
-
         modelName: 'Admin',
     });
     return Admin;

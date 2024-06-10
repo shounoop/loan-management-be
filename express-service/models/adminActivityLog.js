@@ -30,6 +30,14 @@ module.exports = (sequelize, DataTypes) => {
         activity_desc: {
             type: DataTypes.TEXT,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     }, {
         sequelize,
         timestamps: true,

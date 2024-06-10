@@ -32,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         loan_type_id: {
             type: DataTypes.INTEGER,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     }, {
         sequelize,
         timestamps: true,
