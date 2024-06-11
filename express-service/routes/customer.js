@@ -20,5 +20,7 @@ router.get('/:customerId', asyncHandler(customerController.getCustomerById));
 router.post('/', asyncHandler(customerController.createNewCustomer));
 // Update a customer
 router.post('/:customerId', asyncHandler(customerController.updateCustomer));
+// Delete a customer
+router.delete('/:customerId', asyncHandler(customerController.deleteOneCustomer));
 
 module.exports = router;
