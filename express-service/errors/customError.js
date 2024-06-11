@@ -26,8 +26,15 @@ class NoDataFoundError extends CustomError {
   }
 }
 
+class MissingFieldError extends CustomError {
+  constructor(message, status) {
+    super(message, status)
+  }
+}
+
 module.exports = {
   CustomError,
   DatabaseError,
-  NoDataFoundError
+  NoDataFoundError,
+  MissingFieldError
 }
