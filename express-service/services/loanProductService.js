@@ -220,6 +220,15 @@ const getMostSoldLoanProductByMonthInAYear = async (queryYear, queryMonth) => {
     const loanProduct = await loanProductDaos.getLoanProductById(loanProductId);
     return loanProduct
 }
+const findLoanProductByName = async (queryLoanProductName) => {
+    const { loanProductName } = queryLoanProductName
+    if (loanProductName) {
+        const foundLoanProducts = await loanProductDaos.findLoanProductByName(loanProductName);
+        return foundLoanProducts
+    } else {
+        return []
+    }
+}
 module.exports = {
     createLoanProduct,
     getAllLoanProduct,
@@ -227,5 +236,6 @@ module.exports = {
     editLoanProduct,
     deleteLoanProduct,
     getMostSoldLoanProductByYear,
-    getMostSoldLoanProductByMonthInAYear
+    getMostSoldLoanProductByMonthInAYear,
+    findLoanProductByName
 }

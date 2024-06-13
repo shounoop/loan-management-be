@@ -14,5 +14,7 @@ router.get('/total', asyncHandler(loanProductController.getTotalLoanProduct));
 router.get('/most-sold/year/:year/month/:month', asyncHandler(loanProductController.getMostSoldLoanProductByMonthInAYear));
 // Get the most sold loan product of a specific year
 router.get('/most-sold/year/:year', asyncHandler(loanProductController.getMostSoldLoanProductByYear));
+// Search loan product by name
+router.get('/search', asyncHandler(loanProductController.findLoanProductByName));
 
 module.exports = router;

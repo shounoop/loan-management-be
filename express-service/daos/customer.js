@@ -1,5 +1,5 @@
 'use strict'
-
+const { Op } = require("sequelize");
 const { DatabaseError } = require('../errors/customError');
 const db = require('../models/index');
 const customerModel = db['Customer'];
@@ -60,6 +60,58 @@ const getCustomerById = async (customerId) => {
   }
 }
 
+const findCustomersByName = async (customerName) => {
+  const foundCustomers = await customerModel.findAll({
+    where: {
+      full_name: {
+        [Op.like]: `${customerName}%`
+      }
+    }
+  }).then(data => data)
+  .catch((err) => {
+    console.log(err)
+    throw new DatabaseError("Error in finding customer by name", 500)
+  });
+  return JSON.parse(JSON.stringify(foundCustomers));
+}
+
+const findCustomersByIdNumber = async (identityNumber) => {
+  const foundCustomers = await customerModel.findAll({
+    where: {
+      identity_number: {
+        [Op.like]: `%${identityNumber}%`
+      }
+    }
+  }).then(data => data)
+  .catch((err) => {
+    throw new DatabaseError("Error in get customer by id", 500)
+  });
+  return JSON.parse(JSON.stringify(foundCustomers));
+}
+
+const findCustomersByNameAndByIdNumber = async (customerName, identityNumber) => {
+  const foundCustomers = await customerModel.findAll({
+    where: {
+      [Op.and]: [
+        {
+          identity_number: {
+            [Op.like]: `%${identityNumber}%`
+          }
+        },
+        {
+          full_name: {
+            [Op.like]: `${customerName}%`
+          }
+        }
+      ]
+    }
+  }).then(data => data)
+  .catch((err) => {
+    throw new DatabaseError("Error in get customer by id", 500)
+  });
+  return JSON.parse(JSON.stringify(foundCustomers));
+}
+
 const createCustomer = async (customerInfo) => {
   const newCustomer = await customerModel.create(customerInfo).then(data => data)
   .catch((err) => {
@@ -104,5 +156,8 @@ module.exports = {
   getTotalCustomerOfOneMonthInOneYear,
   createCustomer,
   updateCustomer,
-  deleteOneCustomer
+  deleteOneCustomer,
+  findCustomersByName,
+  findCustomersByIdNumber,
+  findCustomersByNameAndByIdNumber
 }

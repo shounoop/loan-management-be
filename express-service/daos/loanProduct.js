@@ -1,4 +1,5 @@
 'use strict'
+const { Op } = require("sequelize");
 const { DatabaseError } = require('../errors/customError');
 const db = require('../models/index');
 const loanProductModel = db['LoanProduct'];
@@ -38,9 +39,24 @@ const getTotalLoanProductOfOneMonthOfOneYear = async (queryYear, queryMonth) => 
   return results
 }
 
+const findLoanProductByName = async (loanProductName) => {
+  const foundLoanProducts = await loanProductModel.findAll({
+    where: {
+      loan_product_name: {
+        [Op.like]: `${loanProductName}%`
+      }
+    }
+  }).then(data => data)
+  .catch((err) => {
+    console.log(err)
+    throw new DatabaseError("Error in finding loan products by name", 500)
+  });
+  return JSON.parse(JSON.stringify(foundLoanProducts));
+}
 module.exports = {
   getLoanProductById,
   getTotalLoanProduct,
   getTotalLoanProductByYear,
   getTotalLoanProductOfOneMonthOfOneYear,
+  findLoanProductByName
 }

@@ -32,6 +32,12 @@ module.exports = (sequelize, DataTypes) => {
         payment_date: {
             type: DataTypes.DATE,
         },
+        principal_amount: {
+            type: DataTypes.DECIMAL(15, 2)
+        },
+        loan_term: {
+            type: DataTypes.STRING(15)
+        },
         next_term_fee: {
             type: DataTypes.DECIMAL(15, 0),
         },

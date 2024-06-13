@@ -14,6 +14,8 @@ router.get('/total/year/:year', asyncHandler(customerController.getTotalCustomer
 router.get('/total/:date', asyncHandler(customerController.getTotalCustomerByDate));
 // Get total customer
 router.get('/total', asyncHandler(customerController.getTotalCustomer));
+// Search customer by name or by identity number
+router.get('/search', asyncHandler(customerController.findCustomers));
 // Get a specific customer
 router.get('/:customerId', asyncHandler(customerController.getCustomerById));
 // Create a new customer

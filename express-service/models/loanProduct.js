@@ -50,14 +50,11 @@ module.exports = (sequelize, DataTypes) => {
         eligibility_criteria: {
             type: DataTypes.TEXT
         },
-        product_description: {
+        loan_product_desc: {
             type: DataTypes.TEXT
         },
         additional_notes: {
             type: DataTypes.TEXT
-        },
-        late_fee: {
-            type: DataTypes.DECIMAL(15, 2),
         },
         status: {
             type: DataTypes.STRING(50),

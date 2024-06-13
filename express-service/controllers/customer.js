@@ -50,6 +50,14 @@ const getCustomerById = async (req, res, next) => {
   })
 }
 
+const findCustomers = async (req, res, next) => {
+  const foundCustomers = await customerService.findCustomers(req.query);
+  res.status(200).json({
+    message: "Successfully found customers!",
+    metadata: foundCustomers
+  })
+}
+
 const createNewCustomer = async (req, res, next) => {
   const newCustomer = await customerDaos.createCustomer(req.body);
   res.status(200).json({
@@ -84,4 +92,5 @@ module.exports = {
   createNewCustomer,
   updateCustomer,
   deleteOneCustomer,
+  findCustomers,
 }

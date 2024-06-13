@@ -54,8 +54,8 @@ const getPaymentById = async (paymentId) => {
   paymentData['remaining_balance'] = foundPayment.remaining_balance
   paymentData['customer_id'] = foundPayment.Customer.customer_id
   paymentData['customer_name'] = foundPayment.Customer.full_name
-  paymentData['createdAt'] = payment.createdAt
-  paymentData['updatedAt'] = payment.updatedAt
+  paymentData['createdAt'] = foundPayment.createdAt
+  paymentData['updatedAt'] = foundPayment.updatedAt
   paymentData['loan_product_id'] = foundPayment.LoanProduct.loan_product_id
   paymentData['loan_product_name'] = foundPayment.LoanProduct.loan_product_name
 
@@ -63,7 +63,7 @@ const getPaymentById = async (paymentId) => {
 }
 
 const createNewPayment = async (newPaymentData) => {
-  const requiredFields = ['loan_product_id', 'customer_id', 'payment_date', 'amount_paid', 'remaining_balance', 'createdAt']
+  const requiredFields = ['loan_product_id', 'customer_id', 'principal_amount', 'payment_date', 'loan_term', 'amount_paid', 'next_term_fee', 'remaining_balance', 'createdAt']
   const checkRequiredFieldsResult = checkRequiredFields(newPaymentData, requiredFields)
 
   if (!checkRequiredFieldsResult.isValid) {
