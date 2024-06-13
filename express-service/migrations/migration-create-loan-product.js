@@ -8,12 +8,16 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
+            loan_method_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            loan_type_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
             loan_product_name: {
                 type: Sequelize.STRING(50),
-                allowNull: false
-            },
-            interest_rate: {
-                type: Sequelize.DECIMAL(5, 2),
                 allowNull: false
             },
             minimum_amount: {

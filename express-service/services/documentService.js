@@ -59,9 +59,9 @@ let getDocumentById = (id) => {
                     errMessage: 'Missing parameter'
                 })
             } else {
-                let data = await db.Document.findOne({
+                let data = await db.Document.findAll({
                     where: {
-                        document_id: id
+                        document_host_id: id
                     },
                 })
                 resolve({
@@ -122,22 +122,28 @@ let editDocument = (data) => {
         }
     })
 }
-let deleteDocument = (inputId) => {
+let deleteDocumentByName = (data) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            if (!inputId) {
+            if (!data.id || !data.filename) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing parameter'
                 })
             } else {
                 let check = await db.Document.findOne({
-                    where: { document_id: inputId },
+                    where: {
+                        document_host_id: data.id,
+                        document_path: data.filename
+                    },
                 })
                 if (check) {
                     await db.Document.destroy({
-                        where: { document_id: inputId }
+                        where: {
+                            document_host_id: data.id,
+                            document_path: data.filename
+                        }
                     })
                     resolve({
                         EC: 0,
@@ -201,5 +207,5 @@ let savefile = (data) => {
 }
 module.exports = {
     createDocument, getAllDocument, getDocumentById, editDocument,
-    deleteDocument, savefile
+    deleteDocumentByName, savefile
 }

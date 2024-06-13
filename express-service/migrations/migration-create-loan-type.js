@@ -15,6 +15,18 @@ module.exports = {
             loan_type_desc: {
                 type: Sequelize.STRING(255),
             },
+            interest_rate: {
+                type: Sequelize.DECIMAL(5, 2),
+                allowNull: false,
+            },
+            late_interest_fee: {
+                type: Sequelize.DECIMAL(15, 2),
+                allowNull: false,
+            },
+            prepay_interest_fee: {
+                type: Sequelize.DECIMAL(15, 2),
+                allowNull: false,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

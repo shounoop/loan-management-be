@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             LoanProduct.hasMany(models.Payment, { foreignKey: 'loan_product_id' });
-            LoanProduct.hasMany(models.Document, { foreignKey: 'document_host_id' });
-            LoanProduct.hasMany(models.LoanProductDetail, { foreignKey: 'loan_product_id' });
+            LoanProduct.belongsTo(models.LoanType, { foreignKey: 'loan_type_id', targetKey: 'loan_type_id', as: 'ProductType' });
+            LoanProduct.belongsTo(models.LoanMethod, { foreignKey: 'loan_method_id', targetKey: 'loan_method_id', as: 'ProductMethod' });
         }
     };
     //object relational mapping
@@ -23,11 +23,14 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true,
         },
+        loan_method_id: {
+            type: DataTypes.INTEGER,
+        },
+        loan_type_id: {
+            type: DataTypes.INTEGER,
+        },
         loan_product_name: {
             type: DataTypes.STRING(50),
-        },
-        interest_rate: {
-            type: DataTypes.DECIMAL(5, 2)
         },
         minimum_amount: {
             type: DataTypes.DECIMAL(15, 2),

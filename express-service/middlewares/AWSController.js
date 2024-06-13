@@ -35,7 +35,6 @@ let uploadFile = async (filePath, bucketName, filename) => {
             Body: fileStream,
         }
         const data = await s3.upload(params).promise()
-        console.log('data', data)
         return data;
     } catch (e) {
         console.log(e)

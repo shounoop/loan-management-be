@@ -47,9 +47,9 @@ let editDocument = async (req, res) => {
         })
     }
 }
-let deleteDocument = async (req, res) => {
+let deleteDocumentByName = async (req, res) => {
     try {
-        let infor = await DocumentService.deleteDocument(req.body.id);
+        let infor = await DocumentService.deleteDocumentByName(req.body);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
@@ -61,5 +61,5 @@ let deleteDocument = async (req, res) => {
 }
 
 module.exports = {
-    createDocument, getAllDocument, getDocumentById, editDocument, deleteDocument,
+    createDocument, getAllDocument, getDocumentById, editDocument, deleteDocumentByName,
 }

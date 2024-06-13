@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         payment_date: {
             type: DataTypes.DATE,
         },
-        amount_all: {
-            type: DataTypes.DECIMAL(18, 2),
+        next_term_fee: {
+            type: DataTypes.DECIMAL(15, 0),
         },
         amount_paid: {
             type: DataTypes.DECIMAL(18, 2),

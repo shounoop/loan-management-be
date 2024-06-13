@@ -4,15 +4,19 @@ const db = require("../models")
 let createLoanType = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.loan_type_name || !data.loan_type_desc) {
+            let checkObject = checkRequiredFields(data)
+            if (checkObject.isValid === false) {
                 resolve({
                     EC: 1,
-                    EM: 'Missing parameter'
+                    EM: `Missing parameter: ${checkObject.element}`
                 })
             } else {
                 await db.LoanType.create({
                     loan_type_name: data.loan_type_name,
                     loan_type_desc: data.loan_type_desc,
+                    interest_rate: data.interest_rate,
+                    late_interest_fee: data.late_interest_fee,
+                    prepay_interest_fee: data.prepay_interest_fee,
                 })
                 resolve({
                     EC: 0,
@@ -69,10 +73,11 @@ let editLoanType = (data) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            if (!data.loan_type_name || !data.loan_type_desc || !data.loan_type_id) {
+            let checkObject = checkRequiredFields(data)
+            if (checkObject.isValid === false) {
                 resolve({
                     EC: 1,
-                    EM: 'Missing parameter '
+                    EM: `Missing parameter: ${checkObject.element}`
                 })
             } else {
                 let check = await db.LoanType.findOne({
@@ -82,6 +87,9 @@ let editLoanType = (data) => {
                 if (check) {
                     check.loan_type_name = data.loan_type_name;
                     check.loan_type_desc = data.loan_type_desc;
+                    check.interest_rate = data.interest_rate;
+                    check.late_interest_fee = data.late_interest_fee;
+                    check.prepay_interest_fee = data.prepay_interest_fee;
                     check.save()
                     resolve({
                         EC: 0,
@@ -133,6 +141,24 @@ let deleteLoanType = (inputId) => {
             reject(e)
         }
     })
+}
+let checkRequiredFields = (data) => {
+    let isValid = true
+    let element = ''
+    let arrFields =
+        ['loan_type_name', 'loan_type_desc',
+            'interest_rate', 'late_interest_fee', 'prepay_interest_fee']
+    for (let i = 0; i < arrFields.length; i++) {
+        if (!data[arrFields[i]]) {
+            isValid = false
+            element = arrFields[i]
+            break;
+        }
+    }
+    return {
+        isValid: isValid,
+        element: element
+    }
 }
 module.exports = {
     createLoanType, getAllLoanType, getLoanTypeById, editLoanType,
