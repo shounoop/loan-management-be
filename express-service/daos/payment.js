@@ -13,7 +13,7 @@ const getAllPayments = async () => {
       },
       {
         model: customerModel
-      }
+      },
     ]
   }).then(data => data).catch(err => {
     throw new DatabaseError("Error in findAll payment", 500)
@@ -23,7 +23,8 @@ const getAllPayments = async () => {
 
 const getAllPaymentsByCustomer = async (customerId) => {
   const allPaymentsByCustomer = await paymentModel.findAll(
-    { where: { customer_Id: customerId },
+    {
+      where: { customer_Id: customerId },
       include: [
         {
           model: loanProduct
@@ -75,20 +76,20 @@ const getTotalOfPaymentByYear = async (queryYear) => {
 
 const getByPaymentById = async (paymentId) => {
   const foundPayment = await paymentModel.findByPk(
-      paymentId, 
-      {
-        include: [
-          {
-            model: loanProduct
-          },
-          {
-            model: customerModel
-          }
-        ]
-      }
-    ).then(data => data).catch(err => {
-      throw new DatabaseError("Error in find payment by id", 500)
-    });
+    paymentId,
+    {
+      include: [
+        {
+          model: loanProduct
+        },
+        {
+          model: customerModel
+        }
+      ]
+    }
+  ).then(data => data).catch(err => {
+    throw new DatabaseError("Error in find payment by id", 500)
+  });
   if (foundPayment == null) {
     return {}
   }
@@ -103,7 +104,14 @@ const createNewPayment = async (newPaymentData) => {
 }
 
 const updatePayment = async (paymentId, updateData) => {
-  const updatedPayment = await paymentModel.update(updateData, { where: { payment_id: paymentId }}).then(data => data).catch(err => {
+  const updatedPayment = await paymentModel.update(updateData, { where: { payment_id: paymentId } }).then(data => data).catch(err => {
+    throw new DatabaseError("Error in update payment", 500)
+  });
+  return JSON.parse(JSON.stringify(updatedPayment));
+
+}
+const updateStatusPayment = async (paymentId, updateData) => {
+  const updatedPayment = await paymentModel.update(updateData, { where: { payment_id: paymentId } }).then(data => data).catch(err => {
     throw new DatabaseError("Error in update payment", 500)
   });
   return JSON.parse(JSON.stringify(updatedPayment));
@@ -111,14 +119,14 @@ const updatePayment = async (paymentId, updateData) => {
 }
 
 const deletePaymentById = async (paymentId) => {
-  const deleteResult = await paymentModel.destroy({ where: { payment_id: paymentId }}).then(data => data).catch(err => {
+  const deleteResult = await paymentModel.destroy({ where: { payment_id: paymentId } }).then(data => data).catch(err => {
     throw new DatabaseError("Error in delete payment by id", 500)
   });
   return deleteResult
 }
 
 const deletePaymentsByCustomerId = async (customerId) => {
-  const deleteResults = await paymentModel.destroy({ where: { customer_id: customerId }}).then(data => data).catch(err => {
+  const deleteResults = await paymentModel.destroy({ where: { customer_id: customerId } }).then(data => data).catch(err => {
     throw new DatabaseError("Error in delete payments by customer id", 500)
   });
   return deleteResults
@@ -156,5 +164,6 @@ module.exports = {
   deletePaymentById,
   deletePaymentsByCustomerId,
   getTotalPaymentOfEachLoanProduct,
-  getTotalPaymentEachLoanProductByMonth
+  getTotalPaymentEachLoanProductByMonth,
+  updateStatusPayment
 }

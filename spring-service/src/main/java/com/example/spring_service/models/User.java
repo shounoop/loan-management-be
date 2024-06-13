@@ -3,6 +3,8 @@ package com.example.spring_service.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.spring_service.dto.UserDto;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -82,5 +84,22 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public UserDto getUserDto() {
+        UserDto userDto = new UserDto();
+
+        userDto.setUsername(this.username);
+        userDto.setEmail(this.email);
+        userDto.setId(this.id);
+
+        Set<String> roleSet = new HashSet<>();
+        for (Role role : this.roles) {
+            roleSet.add(role.getName().toString());
+        }
+
+        userDto.setRole(roleSet);
+
+        return userDto;
     }
 }

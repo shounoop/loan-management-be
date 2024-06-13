@@ -11,11 +11,16 @@ const getAllPayments = async () => {
     const paymentData = {}
     paymentData['payment_id'] = payment.payment_id
     paymentData['payment_date'] = payment.payment_date
+    paymentData['loan_term'] = payment.loan_term
+    paymentData['principal_amount'] = payment.principal_amount
+
+    paymentData['next_term_fee'] = payment.next_term_fee
     paymentData['amount_paid'] = payment.amount_paid
     paymentData['remaining_balance'] = payment.remaining_balance
     paymentData['createdAt'] = payment.createdAt
     paymentData['updatedAt'] = payment.updatedAt
     paymentData['customer_name'] = payment.Customer.full_name
+    paymentData['loan_product_id'] = payment.LoanProduct.loan_product_id
     paymentData['loan_product_name'] = payment.LoanProduct.loan_product_name
     return paymentData
   })
@@ -31,6 +36,9 @@ const getAllPaymentsByCustomer = async (customerId) => {
     const paymentData = {}
     paymentData['payment_id'] = payment.payment_id
     paymentData['payment_date'] = payment.payment_date
+    paymentData['loan_term'] = payment.loan_term
+    paymentData['principal_amount'] = payment.principal_amount
+    paymentData['next_term_fee'] = payment.next_term_fee
     paymentData['amount_paid'] = payment.amount_paid
     paymentData['remaining_balance'] = payment.remaining_balance
     paymentData['createdAt'] = payment.createdAt
@@ -50,6 +58,9 @@ const getPaymentById = async (paymentId) => {
   const paymentData = {}
   paymentData['payment_id'] = foundPayment.payment_id
   paymentData['payment_date'] = foundPayment.payment_date
+  paymentData['loan_term'] = payment.loan_term
+  paymentData['principal_amount'] = foundPayment.principal_amount
+  paymentData['next_term_fee'] = payment.next_term_fee
   paymentData['amount_paid'] = foundPayment.amount_paid
   paymentData['remaining_balance'] = foundPayment.remaining_balance
   paymentData['customer_id'] = foundPayment.Customer.customer_id
@@ -63,13 +74,13 @@ const getPaymentById = async (paymentId) => {
 }
 
 const createNewPayment = async (newPaymentData) => {
-  const requiredFields = ['loan_product_id', 'customer_id', 'principal_amount', 'payment_date', 'loan_term', 'amount_paid', 'next_term_fee', 'remaining_balance', 'createdAt']
+  const requiredFields = ['loan_product_id', 'customer_id', 'payment_date', 'createdAt', 'loan_term', 'principal_amount', 'remaining_balance']
   const checkRequiredFieldsResult = checkRequiredFields(newPaymentData, requiredFields)
 
   if (!checkRequiredFieldsResult.isValid) {
     throw new MissingFieldError(`Missing field ${checkRequiredFieldsResult.element} in creating new payment`, 404);
   }
-  
+
   const { loan_product_id, customer_id } = newPaymentData
 
   // 1. Check if loan product exist in DB
