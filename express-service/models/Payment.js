@@ -29,6 +29,12 @@ module.exports = (sequelize, DataTypes) => {
         customer_id: {
             type: DataTypes.INTEGER,
         },
+        loan_term: {
+            type: DataTypes.INTEGER,
+        },
+        principal_amount: {
+            type: DataTypes.DECIMAL(15, 2),
+        },
         payment_date: {
             type: DataTypes.DATE,
         },

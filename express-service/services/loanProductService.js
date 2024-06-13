@@ -80,15 +80,15 @@ let getLoanProductById = (id) => {
                     },
                     include: [
                         {
-                            model: db.LoanType, as: 'ProductType', attributes: ['loan_type_name', 'loan_type_desc',
-                                'interest_rate', 'late_interest_fee', 'prepay_interest_fee']
+                            model: db.LoanType, as: 'ProductType'
 
                         },
                         {
-                            model: db.LoanMethod, as: 'ProductMethod', attributes: ['loan_method_name', 'loan_method_desc']
+                            model: db.LoanMethod, as: 'ProductMethod'
 
                         },
-                    ]
+                    ],
+                    plain: true,
                 })
                 resolve({
                     EM: 'Ok',

@@ -22,6 +22,8 @@ router.get('/:paymentId', asyncHandler(paymentController.getPaymentById));
 router.post('', asyncHandler(paymentController.createNewPayment));
 // Update a payment
 router.put('/:paymentId', asyncHandler(paymentController.updatePayment));
+// Update a payment date
+router.put('/status/:paymentId', asyncHandler(paymentController.updateStatusPayment));
 // Delete a payment
 router.delete('/:paymentId', asyncHandler(paymentController.deletePaymentById));
 
