@@ -58,9 +58,9 @@ const getPaymentById = async (paymentId) => {
   const paymentData = {}
   paymentData['payment_id'] = foundPayment.payment_id
   paymentData['payment_date'] = foundPayment.payment_date
-  paymentData['loan_term'] = payment.loan_term
+  paymentData['loan_term'] = foundPayment.loan_term
   paymentData['principal_amount'] = foundPayment.principal_amount
-  paymentData['next_term_fee'] = payment.next_term_fee
+  paymentData['next_term_fee'] = foundPayment.next_term_fee
   paymentData['amount_paid'] = foundPayment.amount_paid
   paymentData['remaining_balance'] = foundPayment.remaining_balance
   paymentData['customer_id'] = foundPayment.Customer.customer_id
@@ -74,7 +74,7 @@ const getPaymentById = async (paymentId) => {
 }
 
 const createNewPayment = async (newPaymentData) => {
-  const requiredFields = ['loan_product_id', 'customer_id', 'payment_date', 'createdAt', 'loan_term', 'principal_amount', 'remaining_balance']
+  const requiredFields = ['loan_product_id', 'customer_id', 'payment_date', 'loan_term', 'principal_amount', 'remaining_balance']
   const checkRequiredFieldsResult = checkRequiredFields(newPaymentData, requiredFields)
 
   if (!checkRequiredFieldsResult.isValid) {
@@ -96,6 +96,7 @@ const createNewPayment = async (newPaymentData) => {
   }
 
   // 3. Crete new payment
+  newPaymentData['createdAt'] = new Date()
   const newPayment = await paymentDaos.createNewPayment(newPaymentData);
   return newPayment
 }
