@@ -89,6 +89,9 @@ const getByPaymentById = async (paymentId) => {
     ).then(data => data).catch(err => {
       throw new DatabaseError("Error in find payment by id", 500)
     });
+  if (foundPayment == null) {
+    return {}
+  }
   return JSON.parse(JSON.stringify(foundPayment));
 }
 
