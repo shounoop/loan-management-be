@@ -26,7 +26,6 @@ let createLoanProduct = (data) => {
                     eligibility_criteria: data.eligibility_criteria,
                     product_description: data.product_description,
                     additional_notes: data.additional_notes,
-                    late_fee: data.late_fee,
                     status: data.status,
                 })
                 resolve({
@@ -129,7 +128,6 @@ let editLoanProduct = (data) => {
                     check.eligibility_criteria = data.eligibility_criteria;
                     check.product_description = data.product_description;
                     check.additional_notes = data.additional_notes;
-                    check.late_fee = data.late_fee;
                     check.status = data.status;
                     check.save();
                     resolve({
@@ -188,8 +186,8 @@ let checkRequiredFields = (data) => {
     let element = ''
     let arrFields =
         ['loan_product_name', 'minimum_amount', "maximum_amount",
-            'maximum_term', 'minimum_term', "repayment_schedule", "eligibility_criteria",
-            'late_fee', 'loan_method_id', 'loan_type_id']
+            'maximum_term', 'minimum_term', "repayment_schedule", "eligibility_criteria", 
+            'loan_method_id', 'loan_type_id']
     for (let i = 0; i < arrFields.length; i++) {
         if (!data[arrFields[i]]) {
             isValid = false

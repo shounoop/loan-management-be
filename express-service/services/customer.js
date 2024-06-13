@@ -1,7 +1,8 @@
 'use strict'
 const paymentDaos = require('../daos/payment');
 const customerDaos = require('../daos/customer');
-const { NoDataFoundError } = require('../errors/customError');
+const { NoDataFoundError, MissingFieldError } = require('../errors/customError');
+const checkRequiredFields = require('../utils/checkRequiredFields');
 
 const findCustomers = async (searchQueries) => {
   const { fullName, identity } = searchQueries;
@@ -21,6 +22,18 @@ const findCustomers = async (searchQueries) => {
   }
 }
 
+const createNewCustomer = async (customerInfo) => {
+  const requiredFields = ['full_name', 'date_of_birth', 'gender', 'identity_number', 'address', 'phone_number', 'email', 'occupation', 'customer_status'];
+  const checkRequiredFieldsResult = checkRequiredFields(customerInfo, requiredFields);
+  if (!checkRequiredFieldsResult.isValid) {
+    throw new MissingFieldError(`Missing field ${checkRequiredFieldsResult.element} in creating new customer!`, 404);
+  }
+  const currentDate = new Date();
+  customerInfo['createdAt'] = currentDate;
+  const newCustomer = await customerDaos.createCustomer(customerInfo);
+  return newCustomer
+}
+
 const deleteOneCustomer = async (customerId) => {
   const foundCustomer = await customerDaos.getCustomerById(customerId);
   if (foundCustomer == {}) {
@@ -36,5 +49,6 @@ const deleteOneCustomer = async (customerId) => {
 
 module.exports = {
   findCustomers,
+  createNewCustomer,
   deleteOneCustomer
 }
