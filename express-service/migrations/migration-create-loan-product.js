@@ -43,7 +43,7 @@ module.exports = {
                 type: Sequelize.TEXT,
             },
             loan_product_desc: {
-                type: DataTypes.TEXT
+                type: Sequelize.TEXT
             },
             additional_notes: {
                 type: Sequelize.TEXT
