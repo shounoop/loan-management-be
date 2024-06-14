@@ -42,15 +42,11 @@ module.exports = {
             eligibility_criteria: {
                 type: Sequelize.TEXT,
             },
-            product_description: {
-                type: Sequelize.TEXT,
+            loan_product_desc: {
+                type: DataTypes.TEXT
             },
             additional_notes: {
                 type: Sequelize.TEXT
-            },
-            late_fee: {
-                type: Sequelize.DECIMAL(15, 2),
-                allowNull: false
             },
             status: {
                 type: Sequelize.STRING(50),

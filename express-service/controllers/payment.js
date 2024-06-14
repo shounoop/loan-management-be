@@ -112,7 +112,9 @@ const countingandCreatePayment = async (newPaymentData) => {
     let count = countingPaymentService.calculateFixedRateFee(newPaymentData, product.data, type)
     data.remaining_balance = count.remainingBalance
     data.next_term_fee = count.nextTermFee
-  } else {
+  }
+  //Tính theo method lãi giảm dần
+  else {
     let count = countingPaymentService.calculateDecliningBalanceFee(newPaymentData, product.data, type)
     data.remaining_balance = count.remainingBalance
     data.next_term_fee = count.nextTermFee
