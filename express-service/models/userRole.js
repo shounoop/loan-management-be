@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Admin extends Model {
+    class UserRole extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -11,31 +11,24 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Admin.hasMany(models.AdminActivityLog, { foreignKey: 'admin_id' });
-            Admin.hasMany(models.AdminRole, { foreignKey: 'admin_id' });
+            UserRole.belongsTo(models.User, { foreignKey: 'user_id' });
+            UserRole.belongsTo(models.Role, { foreignKey: 'role_id' });
         }
     };
     //object relational mapping
-    Admin.init({
-        admin_id: {
+    UserRole.init({
+        user_role_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        username: {
-            type: DataTypes.STRING(50),
-        },
-        password: {
-            type: DataTypes.STRING(255),
-        },
-        email: {
-            type: DataTypes.STRING(100),
-        },
         role_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
         },
-        last_login: {
-            type: DataTypes.DATE,
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -48,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         timestamps: true,
-        modelName: 'Admin',
+        modelName: 'UserRole'
     });
-    return Admin;
+    return UserRole;
 };

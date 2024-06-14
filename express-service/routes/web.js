@@ -6,10 +6,9 @@ const loanProductController = require('../controllers/loanProductController')
 const documentStorage = require('../middlewares/documentStorage')
 const loanMethodController = require('../controllers/loanMethodController')
 const documentService = require('../services/documentService')
-const loanProductDetailController = require('../controllers/loanProductDetailController')
 const AWSController = require('../middlewares/AWSController');
 const emailService = require('../services/emailService')
-const uploadFile = require('../middlewares/AWSController')
+const documentController = require('../controllers/documentController')
 let router = express.Router();
 
 //set multer to upload file
@@ -38,12 +37,6 @@ let initWebRouters = (app) => {
     router.put('/api/edit-loan-product', loanProductController.editLoanProduct)
     router.delete('/api/delete-loan-product', loanProductController.deleteLoanProduct)
 
-    //LoanProduct
-    router.post('/api/create-loan-product-detail', loanProductDetailController.createLoanProductDetail)
-    router.get('/api/get-all-loan-product-detail', loanProductDetailController.getAllLoanProductDetail)
-    router.get('/api/get-loan-product-detail-by-id', loanProductDetailController.getLoanProductDetailById)
-    router.put('/api/edit-loan-product-detail', loanProductDetailController.editLoanProductDetail)
-    router.delete('/api/delete-loan-product-detail', loanProductDetailController.deleteLoanProductDetail)
 
     //LoanMethod
     router.post('/api/create-loan-method', loanMethodController.createLoanMethod)
@@ -78,10 +71,16 @@ let initWebRouters = (app) => {
             let fileName = []
             if (req.files) {
                 for (const item of req.files) {
-                    let data = await uploadFile(item.path, Bucket, item.filename)
-                    fileName.push(data.key)
+                    let data = await AWSController.uploadFile(item.path, Bucket, item.filename)
+                    if (data) { fileName.push(data.key) }
+                    else {
+                        res.status(401).json({
+                            EC: 1,
+                            EM: `Cannot upload this ${item.filename}`
+                        })
+                    }
                 }
-                if (req.body.id) {
+                if (true) {
                     let infor = await documentService.savefile({
                         fileName: fileName,
                         id: 1,
@@ -109,6 +108,8 @@ let initWebRouters = (app) => {
         }
     })
     router.get('/api/download/filename', AWSController.downloadFileS3)
+    router.get('/api/get-file-by-id', documentController.getDocumentById)
+    router.delete('/api/delete-file-by-name', documentController.deleteDocumentByName)
 
     return app.use("/", router)
 

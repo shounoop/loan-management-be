@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class LoanProductDetail extends Model {
+    class User extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -11,26 +11,28 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            LoanProductDetail.belongsTo(models.LoanProduct, { foreignKey: 'loan_product_id', targetKey: 'loan_product_id', as: 'Product' });
-            LoanProductDetail.belongsTo(models.LoanMethod, { foreignKey: 'loan_method_id', targetKey: 'loan_method_id', as: 'Method' });
-            LoanProductDetail.belongsTo(models.LoanType, { foreignKey: 'loan_type_id', targetKey: 'loan_type_id', as: 'Type' })
+            User.hasMany(models.UserActivityLog, { foreignKey: 'user_id' });
+            User.hasMany(models.UserRole, { foreignKey: 'user_id' });
         }
     };
     //object relational mapping
-    LoanProductDetail.init({
-        loan_product_detail_id: {
+    User.init({
+        user_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        loan_product_id: {
-            type: DataTypes.INTEGER,
+        username: {
+            type: DataTypes.STRING(50),
         },
-        loan_method_id: {
-            type: DataTypes.INTEGER,
+        password: {
+            type: DataTypes.STRING(255),
         },
-        loan_type_id: {
-            type: DataTypes.INTEGER,
+        email: {
+            type: DataTypes.STRING(100),
+        },
+        last_login: {
+            type: DataTypes.DATE,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -43,8 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         timestamps: true,
-
-        modelName: 'LoanProductDetail',
+        modelName: 'User',
     });
-    return LoanProductDetail;
+    return User;
 };

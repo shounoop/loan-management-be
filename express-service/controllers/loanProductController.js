@@ -97,6 +97,13 @@ const getMostSoldLoanProductByMonthInAYear = async (req, res, next) => {
         metadata: mostSoldLoanProductByMonthInAYear
     })
 }
+const findLoanProductByName = async (req, res, next) => {
+    const foundLoanProducts = await LoanProductService.findLoanProductByName(req.query);
+    return res.status(200).json({
+        message: "Successfully found loan products by name",
+        metadata: foundLoanProducts
+    })
+}
 module.exports = {
     createLoanProduct,
     getAllLoanProduct,
@@ -107,5 +114,6 @@ module.exports = {
     getTotalLoanProductByYear,
     getTotalLoanProductOfOneMonthOfOneYear,
     getMostSoldLoanProductByYear,
-    getMostSoldLoanProductByMonthInAYear
+    getMostSoldLoanProductByMonthInAYear,
+    findLoanProductByName
 }

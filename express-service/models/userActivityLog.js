@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class AdminActivityLog extends Model {
+    class UserActivityLog extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -11,17 +11,17 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            AdminActivityLog.belongsTo(models.Admin, { foreignKey: 'admin_id' });
+            UserActivityLog.belongsTo(models.User, { foreignKey: 'user_id' });
         }
     };
     //object relational mapping
-    AdminActivityLog.init({
+    UserActivityLog.init({
         log_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        admin_id: {
+        user_id: {
             type: DataTypes.INTEGER,
         },
         activity_type: {
@@ -41,8 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         timestamps: true,
-
-        modelName: 'AdminActivityLog',
+        modelName: 'UserActivityLog',
     });
-    return AdminActivityLog;
+    return UserActivityLog;
 };

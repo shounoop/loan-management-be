@@ -1,7 +1,6 @@
 package com.example.spring_service.models;
 
 public class EExpressApiUrl {
-    public static final String GET_CUSTOMERS = "/customers/all";
     public static final String GET_LOAN_METHODS = "/get-all-loan-method";
     public static final String GET_LOAN_METHOD_BY_ID = "/get-loan-method-by-id";
     public static final String CREATE_LOAN_METHOD = "/create-loan-method";
@@ -17,4 +16,16 @@ public class EExpressApiUrl {
     public static final String CREATE_LOAN_PRODUCT = "/create-loan-product";
     public static final String EDIT_LOAN_PRODUCT = "/edit-loan-product";
     public static final String DELETE_LOAN_PRODUCT = "/delete-loan-product";
+    public static final String GET_CUSTOMERS = "/customers/all";
+    public static final String GET_CUSTOMER_BY_ID = "/customers";
+    public static final String CREATE_CUSTOMER = "/customers";
+    public static final String EDIT_CUSTOMER = "/customers";
+    public static final String DELETE_CUSTOMER = "/customers";
+    public static final String GET_LOAN_APPLICATIONS = "/payments/all";
+    public static final String GET_LOAN_APPLICATION_BY_ID = "/payments";
+    public static final String GET_LOAN_APPLICATION_BY_CUSTOMER_ID = "/payments/all";
+    public static final String CREATE_LOAN_APPLICATION = "/payments";
+    public static final String EDIT_LOAN_APPLICATION = "/payments";
+    public static final String DELETE_LOAN_APPLICATION = "/payments";
+
 }

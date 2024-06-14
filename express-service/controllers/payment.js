@@ -1,7 +1,8 @@
 'use strict'
 const paymentDaos = require('../daos/payment');
 const paymentService = require('../services/payment');
-
+const loanProductService = require('../services/loanProductService')
+const countingPaymentService = require('../services/CountingPaymentService')
 const getAllPayments = async (req, res, next) => {
   const allPayments = await paymentService.getAllPayments();
   res.status(200).json({
@@ -59,6 +60,16 @@ const getPaymentById = async (req, res, next) => {
 }
 
 const createNewPayment = async (req, res, next) => {
+  let check = await countingandCreatePayment(req.body)
+  if (!check) {
+    res.status(500).json({
+      message: "Fail to create new payment!",
+    })
+  }
+  req.body.remaining_balance = check.remaining_balance
+  req.body.next_term_fee = check.next_term_fee
+  req.body.amount_paid = check.amount_paid
+  req.body.remaining_balance = check.remaining_balance
   const newPayment = await paymentService.createNewPayment(req.body);
   res.status(200).json({
     message: "Successfully create new payment!",
@@ -73,6 +84,13 @@ const updatePayment = async (req, res, next) => {
     metadata: updateResult[0]
   })
 }
+const updateStatusPayment = async (req, res, next) => {
+  const updateResult = await paymentDaos.updateStatusPayment(Number.parseInt(req.params.paymentId), req.body);
+  res.status(200).json({
+    message: "Successfully update payment",
+    metadata: updateResult[0]
+  })
+}
 
 const deletePaymentById = async (req, res, next) => {
   const deleteResult = await paymentDaos.deletePaymentById(Number.parseInt(req.params.paymentId));
@@ -81,7 +99,48 @@ const deletePaymentById = async (req, res, next) => {
     metadata: deleteResult
   })
 }
-
+const countingandCreatePayment = async (newPaymentData) => {
+  let data = {}
+  console.log('newPaymentData', newPaymentData)
+  let product = await loanProductService.getLoanProductById(newPaymentData.loan_product_id)
+  let type = product.data.ProductType
+  let method_id = product.data.loan_method_id
+  data.amount_paid = 0.00;
+  data.remaining_balance = newPaymentData.remaining_balance;
+  //Tính theo method lãi cố đinh
+  if (method_id === 1) {
+    let count = countingPaymentService.calculateFixedRateFee(newPaymentData, product.data, type)
+    data.remaining_balance = count.remainingBalance
+    data.next_term_fee = count.nextTermFee
+  }
+  //Tính theo method lãi giảm dần
+  else {
+    let count = countingPaymentService.calculateDecliningBalanceFee(newPaymentData, product.data, type)
+    data.remaining_balance = count.remainingBalance
+    data.next_term_fee = count.nextTermFee
+  }
+  console.log('data', data)
+  return data
+}
+const countingandGetPayment = async (PaymentId) => {
+  let data = {}
+  console.log('newPaymentData', newPaymentData)
+  let product = await loanProductService.getLoanProductById(newPaymentData.loan_product_id)
+  let type = product.data.ProductType
+  let method_id = product.data.loan_method_id
+  //Tính theo method lãi cố đinh
+  if (method_id === 1) {
+    let count = countingPaymentService.calculateFixedRateFee(newPaymentData, product.data, type)
+    data.remaining_balance = count.remainingBalance
+    data.next_term_fee = count.nextTermFee
+  } else {
+    let count = countingPaymentService.calculateDecliningBalanceFee(newPaymentData, product.data, type)
+    data.remaining_balance = count.remainingBalance
+    data.next_term_fee = count.nextTermFee
+  }
+  console.log('data', data)
+  return data
+}
 module.exports = {
   getAllPayments,
   getPaymentOfCustomer,
@@ -92,5 +151,6 @@ module.exports = {
   getPaymentById,
   createNewPayment,
   updatePayment,
-  deletePaymentById
+  deletePaymentById,
+  updateStatusPayment,
 }

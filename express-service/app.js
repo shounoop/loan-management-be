@@ -42,6 +42,19 @@ app.get('/api/express-to-spring', async (req, res) => {
 	}
 });
 
+app.use((err, req, res, next) => {
+	const statusCode = err.status || 500;
+	const message = err.message || "Internal Server Error";
+	const name = err.name || "InternalServerError";
+	const stack = err.stack
+	res.status(statusCode).json({
+		statusCode: statusCode,
+		message: message,
+		name: name,
+		stack: stack
+	})
+})
+
 app.listen(port, () => {
 	console.log(`Express.js service running at http://localhost:${port}`);
 });

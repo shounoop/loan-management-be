@@ -2,6 +2,7 @@ const { resolve } = require("bluebird");
 const paymentDaos = require('../daos/payment');
 const loanProductDaos = require('../daos/loanProduct');
 const db = require("../models");
+const { includes } = require("lodash");
 
 let createLoanProduct = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -15,7 +16,8 @@ let createLoanProduct = (data) => {
             } else {
                 await db.LoanProduct.create({
                     loan_product_name: data.loan_product_name,
-                    interest_rate: data.interest_rate,
+                    loan_method_id: data.loan_method_id,
+                    loan_type_id: data.loan_type_id,
                     minimum_amount: data.minimum_amount,
                     maximum_amount: data.maximum_amount,
                     minimum_term: data.minimum_term,
@@ -24,7 +26,6 @@ let createLoanProduct = (data) => {
                     eligibility_criteria: data.eligibility_criteria,
                     product_description: data.product_description,
                     additional_notes: data.additional_notes,
-                    late_fee: data.late_fee,
                     status: data.status,
                 })
                 resolve({
@@ -41,6 +42,17 @@ let getAllLoanProduct = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let data = await db.LoanProduct.findAll({
+                include: [
+                    {
+                        model: db.LoanType, as: 'ProductType', attributes: ['loan_type_name', 'loan_type_desc',
+                            'interest_rate', 'late_interest_fee', 'prepay_interest_fee']
+
+                    },
+                    {
+                        model: db.LoanMethod, as: 'ProductMethod', attributes: ['loan_method_name', 'loan_method_desc']
+
+                    },
+                ]
             });
             resolve({
                 EC: 0,
@@ -65,6 +77,17 @@ let getLoanProductById = (id) => {
                     where: {
                         loan_product_id: id
                     },
+                    include: [
+                        {
+                            model: db.LoanType, as: 'ProductType'
+
+                        },
+                        {
+                            model: db.LoanMethod, as: 'ProductMethod'
+
+                        },
+                    ],
+                    plain: true,
                 })
                 resolve({
                     EM: 'Ok',
@@ -95,7 +118,8 @@ let editLoanProduct = (data) => {
                 })
                 if (check) {
                     check.loan_product_name = data.loan_product_name;
-                    check.interest_rate = data.interest_rate;
+                    check.loan_method_id = data.loan_method_id;
+                    check.loan_type_id = data.loan_type_id;
                     check.minimum_amount = data.minimum_amount;
                     check.maximum_amount = data.maximum_amount;
                     check.minimum_term = data.minimum_term;
@@ -104,7 +128,6 @@ let editLoanProduct = (data) => {
                     check.eligibility_criteria = data.eligibility_criteria;
                     check.product_description = data.product_description;
                     check.additional_notes = data.additional_notes;
-                    check.late_fee = data.late_fee;
                     check.status = data.status;
                     check.save();
                     resolve({
@@ -162,8 +185,9 @@ let checkRequiredFields = (data) => {
     let isValid = true
     let element = ''
     let arrFields =
-        ['loan_product_name', 'interest_rate', 'minimum_amount', "maximum_amount",
-            'maximum_term', 'minimum_term', "repayment_schedule", "eligibility_criteria", 'late_fee']
+        ['loan_product_name', 'minimum_amount', "maximum_amount",
+            'maximum_term', 'minimum_term', "repayment_schedule", "eligibility_criteria", 
+            'loan_method_id', 'loan_type_id']
     for (let i = 0; i < arrFields.length; i++) {
         if (!data[arrFields[i]]) {
             isValid = false
@@ -194,6 +218,15 @@ const getMostSoldLoanProductByMonthInAYear = async (queryYear, queryMonth) => {
     const loanProduct = await loanProductDaos.getLoanProductById(loanProductId);
     return loanProduct
 }
+const findLoanProductByName = async (queryLoanProductName) => {
+    const { loanProductName } = queryLoanProductName
+    if (loanProductName) {
+        const foundLoanProducts = await loanProductDaos.findLoanProductByName(loanProductName);
+        return foundLoanProducts
+    } else {
+        return []
+    }
+}
 module.exports = {
     createLoanProduct,
     getAllLoanProduct,
@@ -201,5 +234,6 @@ module.exports = {
     editLoanProduct,
     deleteLoanProduct,
     getMostSoldLoanProductByYear,
-    getMostSoldLoanProductByMonthInAYear
+    getMostSoldLoanProductByMonthInAYear,
+    findLoanProductByName
 }

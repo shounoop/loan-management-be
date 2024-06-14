@@ -18,9 +18,17 @@ module.exports = {
             },
             payment_date: {
                 type: Sequelize.DATE,
+                allowNull: false,
             },
-            amount_all: {
-                type: Sequelize.DECIMAL(18, 2),
+            loan_term: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            principal_amount: {
+                type: Sequelize.DECIMAL(15, 2),
+            },
+            next_term_fee: {
+                type: Sequelize.DECIMAL(15, 0),
                 allowNull: false,
             },
             amount_paid: {

@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Document.belongsTo(models.LoanProduct, { foreignKey: 'document_host_id', targetKey: 'loan_product_id', as: 'LoanProductDoc' });
             Document.belongsTo(models.Payment, { foreignKey: 'document_host_id', targetKey: 'payment_id', as: 'PaymentDoc' });
         }
     };
