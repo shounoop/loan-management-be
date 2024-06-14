@@ -1,21 +1,11 @@
 package com.example.spring_service.controllers;
 
-import com.example.spring_service.models.EExpressApiUrl;
-import com.example.spring_service.payload.request.LoanMethodCreatePayload;
-import com.example.spring_service.payload.request.LoanMethodDeletePayload;
-import com.example.spring_service.payload.request.LoanMethodEditPayload;
-import com.example.spring_service.payload.request.LoanProductCreatePayload;
-import com.example.spring_service.payload.request.LoanProductDeletePayload;
-import com.example.spring_service.payload.request.LoanProductEditPayload;
-import com.example.spring_service.payload.request.LoanTypeCreatePayload;
-import com.example.spring_service.payload.request.LoanTypeDeletePayload;
-import com.example.spring_service.payload.request.LoanTypeEditPayload;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +17,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.http.MediaType;
+
+import com.example.spring_service.models.EExpressApiUrl;
+import com.example.spring_service.payload.request.LoanMethodCreatePayload;
+import com.example.spring_service.payload.request.LoanMethodDeletePayload;
+import com.example.spring_service.payload.request.LoanMethodEditPayload;
+import com.example.spring_service.payload.request.LoanProductCreatePayload;
+import com.example.spring_service.payload.request.LoanProductDeletePayload;
+import com.example.spring_service.payload.request.LoanProductEditPayload;
+import com.example.spring_service.payload.request.LoanTypeCreatePayload;
+import com.example.spring_service.payload.request.LoanTypeDeletePayload;
+import com.example.spring_service.payload.request.LoanTypeEditPayload;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
@@ -43,25 +43,25 @@ public class ExpressController {
     }
 
     @GetMapping("/loan-methods")
-    public ResponseEntity<String> getLoanMethods() {
+    public ResponseEntity<?> getLoanMethods() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_METHODS;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @GetMapping("/loan-methods/{id}")
-    public ResponseEntity<String> getLoanMethodById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getLoanMethodById(@PathVariable("id") Integer id) {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_METHOD_BY_ID + "?id=" + id;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @PostMapping("/loan-methods")
-    public ResponseEntity<String> createLoanMethod(@RequestBody LoanMethodCreatePayload payload) {
+    public ResponseEntity<?> createLoanMethod(@RequestBody LoanMethodCreatePayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.CREATE_LOAN_METHOD;
 
         HttpHeaders headers = new HttpHeaders();
@@ -69,13 +69,13 @@ public class ExpressController {
 
         HttpEntity<LoanMethodCreatePayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         return response;
     }
 
     @PutMapping("/loan-methods")
-    public ResponseEntity<String> editLoanMethod(@RequestBody LoanMethodEditPayload payload) {
+    public ResponseEntity<?> editLoanMethod(@RequestBody LoanMethodEditPayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.EDIT_LOAN_METHOD;
 
         HttpHeaders headers = new HttpHeaders();
@@ -83,13 +83,13 @@ public class ExpressController {
 
         HttpEntity<LoanMethodEditPayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
 
         return response;
     }
 
     @DeleteMapping("/loan-methods/{id}")
-    public ResponseEntity<String> deleteLoanMethod(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteLoanMethod(@PathVariable("id") Integer id) {
         String url = expressServiceUrl + EExpressApiUrl.DELETE_LOAN_METHOD;
 
         LoanMethodDeletePayload payload = new LoanMethodDeletePayload(id);
@@ -99,31 +99,31 @@ public class ExpressController {
 
         HttpEntity<LoanMethodDeletePayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
         return response;
     }
 
     @GetMapping("/loan-types")
-    public ResponseEntity<String> getLoanTypes() {
+    public ResponseEntity<?> getLoanTypes() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_TYPES;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @GetMapping("/loan-types/{id}")
-    public ResponseEntity<String> getLoanTypeById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getLoanTypeById(@PathVariable("id") Integer id) {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_TYPE_BY_ID + "?id=" + id;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @PostMapping("/loan-types")
-    public ResponseEntity<String> createLoanType(@RequestBody LoanTypeCreatePayload payload) {
+    public ResponseEntity<?> createLoanType(@RequestBody LoanTypeCreatePayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.CREATE_LOAN_TYPE;
 
         HttpHeaders headers = new HttpHeaders();
@@ -131,13 +131,13 @@ public class ExpressController {
 
         HttpEntity<LoanTypeCreatePayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         return response;
     }
 
     @PutMapping("/loan-types")
-    public ResponseEntity<String> editLoanType(@RequestBody LoanTypeEditPayload payload) {
+    public ResponseEntity<?> editLoanType(@RequestBody LoanTypeEditPayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.EDIT_LOAN_TYPE;
 
         HttpHeaders headers = new HttpHeaders();
@@ -145,13 +145,13 @@ public class ExpressController {
 
         HttpEntity<LoanTypeEditPayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
 
         return response;
     }
 
     @DeleteMapping("/loan-types/{id}")
-    public ResponseEntity<String> deleteLoanType(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteLoanType(@PathVariable("id") Integer id) {
         String url = expressServiceUrl + EExpressApiUrl.DELETE_LOAN_TYPE;
 
         LoanTypeDeletePayload payload = new LoanTypeDeletePayload(id);
@@ -161,31 +161,31 @@ public class ExpressController {
 
         HttpEntity<LoanTypeDeletePayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
         return response;
     }
 
     @GetMapping("/loan-products")
-    public ResponseEntity<String> getLoanProducts() {
+    public ResponseEntity<?> getLoanProducts() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_PRODUCTS;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @GetMapping("/loan-products/{id}")
-    public ResponseEntity<String> getLoanProductById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getLoanProductById(@PathVariable("id") Integer id) {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_PRODUCT_BY_ID + "?id=" + id;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @PostMapping("/loan-products")
-    public ResponseEntity<String> createLoanProduct(@RequestBody LoanProductCreatePayload payload) {
+    public ResponseEntity<?> createLoanProduct(@RequestBody LoanProductCreatePayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.CREATE_LOAN_PRODUCT;
 
         HttpHeaders headers = new HttpHeaders();
@@ -193,13 +193,13 @@ public class ExpressController {
 
         HttpEntity<LoanProductCreatePayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         return response;
     }
 
     @PutMapping("/loan-products")
-    public ResponseEntity<String> editLoanProduct(@RequestBody LoanProductEditPayload payload) {
+    public ResponseEntity<?> editLoanProduct(@RequestBody LoanProductEditPayload payload) {
         String url = expressServiceUrl + EExpressApiUrl.EDIT_LOAN_PRODUCT;
 
         HttpHeaders headers = new HttpHeaders();
@@ -207,13 +207,13 @@ public class ExpressController {
 
         HttpEntity<LoanProductEditPayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
 
         return response;
     }
 
     @DeleteMapping("/loan-products/{id}")
-    public ResponseEntity<String> deleteLoanProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteLoanProduct(@PathVariable("id") Integer id) {
         String url = expressServiceUrl + EExpressApiUrl.DELETE_LOAN_PRODUCT;
 
         LoanProductDeletePayload payload = new LoanProductDeletePayload(id);
@@ -223,31 +223,32 @@ public class ExpressController {
 
         HttpEntity<LoanProductDeletePayload> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
         return response;
     }
 
     @GetMapping("/customers")
-    public ResponseEntity<String> getCustomers() {
+    public ResponseEntity<?> getCustomers() {
         String url = expressServiceUrl + EExpressApiUrl.GET_CUSTOMERS;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @GetMapping("/customers/{id}")
-    public ResponseEntity<String> getCustomerById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getCustomerById(@PathVariable("id") Integer id) {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         String url = expressServiceUrl + EExpressApiUrl.GET_CUSTOMER_BY_ID + "/" + id;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @PostMapping("/customers")
-    public ResponseEntity<String> createCustomer(@RequestBody String payload) {
+    // @RequestBody String (String payload can be used if the payload is a object)
+    public ResponseEntity<?> createCustomer(@RequestBody String payload) {
         String url = expressServiceUrl + EExpressApiUrl.CREATE_CUSTOMER;
 
         HttpHeaders headers = new HttpHeaders();
@@ -255,13 +256,13 @@ public class ExpressController {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         return response;
     }
 
     @PostMapping("/customers/{id}")
-    public ResponseEntity<String> editCustomer(@PathVariable("id") Integer id, @RequestBody String payload) {
+    public ResponseEntity<?> editCustomer(@PathVariable("id") Integer id, @RequestBody String payload) {
         String url = expressServiceUrl + EExpressApiUrl.EDIT_CUSTOMER + "/" + id;
 
         HttpHeaders headers = new HttpHeaders();
@@ -269,51 +270,51 @@ public class ExpressController {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         return response;
     }
 
     @DeleteMapping("/customers/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable("id") Integer id) {
         String url = expressServiceUrl + EExpressApiUrl.DELETE_CUSTOMER + "/" + id;
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
 
         return response;
     }
 
     @GetMapping("/loan-applications")
-    public ResponseEntity<String> getLoanApplications() {
+    public ResponseEntity<?> getLoanApplications() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_APPLICATIONS;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @GetMapping("/loan-applications/{id}")
-    public ResponseEntity<String> getLoanApplicationById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getLoanApplicationById(@PathVariable("id") Integer id) {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_APPLICATION_BY_ID + "/" + id;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @GetMapping("/loan-applications/customer/{id}")
-    public ResponseEntity<String> getLoanApplicationByCustomerId(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getLoanApplicationByCustomerId(@PathVariable("id") Integer id) {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_APPLICATION_BY_CUSTOMER_ID + "/" + id;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
     @PostMapping("/loan-applications")
-    public ResponseEntity<String> createLoanApplication(@RequestBody String payload) {
+    public ResponseEntity<?> createLoanApplication(@RequestBody String payload) {
         String url = expressServiceUrl + EExpressApiUrl.CREATE_LOAN_APPLICATION;
 
         HttpHeaders headers = new HttpHeaders();
@@ -321,13 +322,13 @@ public class ExpressController {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
         return response;
     }
 
     @PutMapping("/loan-applications/{id}")
-    public ResponseEntity<String> editLoanApplication(@PathVariable("id") Integer id, @RequestBody String payload) {
+    public ResponseEntity<?> editLoanApplication(@PathVariable("id") Integer id, @RequestBody String payload) {
         String url = expressServiceUrl + EExpressApiUrl.EDIT_LOAN_APPLICATION + "/" + id;
 
         HttpHeaders headers = new HttpHeaders();
@@ -335,18 +336,17 @@ public class ExpressController {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
 
         return response;
     }
 
     @DeleteMapping("/loan-applications/{id}")
-    public ResponseEntity<String> deleteLoanApplication(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteLoanApplication(@PathVariable("id") Integer id) {
         String url = expressServiceUrl + EExpressApiUrl.DELETE_LOAN_APPLICATION + "/" + id;
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
 
         return response;
     }
-
 }
