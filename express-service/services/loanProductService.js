@@ -1,6 +1,8 @@
 const { resolve } = require("bluebird");
 const paymentDaos = require('../daos/payment');
 const loanProductDaos = require('../daos/loanProduct');
+const loanMethodService = require('../services/loanMethodService')
+const loanTypeService = require('../services/loanTypeService')
 const db = require("../models");
 const { includes } = require("lodash");
 
@@ -8,6 +10,24 @@ let createLoanProduct = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let checkObject = checkRequiredFields(data)
+            //Check method exist
+            let method = await db.LoanMethod.findOne({
+                where: {
+                    loan_method_id: data.loan_method_id
+                }
+            })
+            //check type exist
+            let type = await db.LoanType.findOne({
+                where: {
+                    loan_type_id: data.loan_type_id
+                }
+            })
+            if (!method || !type) {
+                resolve({
+                    EC: 1,
+                    EM: `This product's method or type doesn't exist. Try again!`
+                })
+            }
             if (checkObject.isValid === false) {
                 resolve({
                     EC: 1,
@@ -186,7 +206,7 @@ let checkRequiredFields = (data) => {
     let element = ''
     let arrFields =
         ['loan_product_name', 'minimum_amount', "maximum_amount",
-            'maximum_term', 'minimum_term', "repayment_schedule", "eligibility_criteria", 
+            'maximum_term', 'minimum_term', "repayment_schedule", "eligibility_criteria",
             'loan_method_id', 'loan_type_id']
     for (let i = 0; i < arrFields.length; i++) {
         if (!data[arrFields[i]]) {
