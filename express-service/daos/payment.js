@@ -110,13 +110,6 @@ const updatePayment = async (paymentId, updateData) => {
   return JSON.parse(JSON.stringify(updatedPayment));
 
 }
-const updateStatusPayment = async (paymentId, updateData) => {
-  const updatedPayment = await paymentModel.update(updateData, { where: { payment_id: paymentId } }).then(data => data).catch(err => {
-    throw new DatabaseError("Error in update payment", 500)
-  });
-  return JSON.parse(JSON.stringify(updatedPayment));
-
-}
 
 const deletePaymentById = async (paymentId) => {
   const deleteResult = await paymentModel.destroy({ where: { payment_id: paymentId } }).then(data => data).catch(err => {
@@ -165,5 +158,4 @@ module.exports = {
   deletePaymentsByCustomerId,
   getTotalPaymentOfEachLoanProduct,
   getTotalPaymentEachLoanProductByMonth,
-  updateStatusPayment
 }

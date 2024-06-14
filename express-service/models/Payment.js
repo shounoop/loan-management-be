@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(15)
         },
         next_term_fee: {
-            type: DataTypes.DECIMAL(15, 0),
+            type: DataTypes.DECIMAL(15, 2),
         },
         amount_paid: {
             type: DataTypes.DECIMAL(18, 2),
