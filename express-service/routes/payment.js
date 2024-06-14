@@ -2,10 +2,11 @@
 const express = require('express');
 const paymentController = require('../controllers/payment');
 const asyncHandler = require('../middlewares/asyncHandler');
-const router = express.Router();
+const countingPaymentController = require('../controllers/countingPaymentController')
 
+const router = express.Router();
 // Get detail of all payment
-router.get('/all', asyncHandler(paymentController.getAllPayments));
+router.get('/all', asyncHandler(countingPaymentController.updatePaymentStatusMiddleware), asyncHandler(paymentController.getAllPayments));
 // Get all payments of a customer
 router.get('/all/:customerId', asyncHandler(paymentController.getPaymentOfCustomer));
 // Get total of payment of a month in a year
@@ -19,12 +20,14 @@ router.get('/total', asyncHandler(paymentController.getTotalOfPayment));
 // Get detail of one payment
 router.get('/:paymentId', asyncHandler(paymentController.getPaymentById));
 // Create new payment
-router.post('', asyncHandler(paymentController.createNewPayment));
+router.post('', asyncHandler(countingPaymentController.beforeCreateNewPayment), asyncHandler(paymentController.createNewPayment));
 // Update a payment
 router.put('/:paymentId', asyncHandler(paymentController.updatePayment));
 // Update a payment date
 router.put('/status/:paymentId', asyncHandler(paymentController.updateStatusPayment));
 // Delete a payment
 router.delete('/:paymentId', asyncHandler(paymentController.deletePaymentById));
+// update interest amount updatePaymentStatusMiddleware
+
 
 module.exports = router

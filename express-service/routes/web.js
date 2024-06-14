@@ -9,6 +9,7 @@ const documentService = require('../services/documentService')
 const AWSController = require('../middlewares/AWSController');
 const emailService = require('../services/emailService')
 const documentController = require('../controllers/documentController')
+const countingPaymentController = require('../controllers/countingPaymentController')
 let router = express.Router();
 
 //set multer to upload file
@@ -111,6 +112,9 @@ let initWebRouters = (app) => {
     router.get('/api/get-file-by-id', documentController.getDocumentById)
     router.delete('/api/delete-file-by-name', documentController.deleteDocumentByName)
 
+
+    //update amount interest 
+    router.get('/api/test', countingPaymentController.updatePaymentStatusMiddleware)
     return app.use("/", router)
 
 

@@ -13,7 +13,7 @@ const getAllPayments = async () => {
     paymentData['payment_date'] = payment.payment_date
     paymentData['loan_term'] = payment.loan_term
     paymentData['principal_amount'] = payment.principal_amount
-
+    paymentData['payment_status'] = payment.payment_status
     paymentData['next_term_fee'] = payment.next_term_fee
     paymentData['amount_paid'] = payment.amount_paid
     paymentData['remaining_balance'] = payment.remaining_balance
