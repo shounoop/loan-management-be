@@ -28,7 +28,7 @@ module.exports = {
                 type: Sequelize.DECIMAL(15, 2),
             },
             next_term_fee: {
-                type: Sequelize.DECIMAL(15, 0),
+                type: Sequelize.DECIMAL(15, 2),
                 allowNull: false,
             },
             amount_paid: {
@@ -40,7 +40,7 @@ module.exports = {
                 allowNull: false,
             },
             payment_status: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.INTEGER,
             },
             createdAt: {
                 allowNull: false,

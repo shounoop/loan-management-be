@@ -3,7 +3,8 @@ const paymentDaos = require('../daos/payment');
 const userDaos = require('../daos/customer');
 const loanDaos = require('../daos/loanProduct');
 const checkRequiredFields = require('../utils/checkRequiredFields');
-const { MissingFieldError, NoDataFoundError } = require('../errors/customError');
+const { MissingFieldError, NoDataFoundError, CreateNewDataError } = require('../errors/customError');
+const LoanProductConst = require('../constant/loanProductConst');
 
 const getAllPayments = async () => {
   const allPayments = await paymentDaos.getAllPayments();
@@ -17,11 +18,13 @@ const getAllPayments = async () => {
     paymentData['next_term_fee'] = payment.next_term_fee
     paymentData['amount_paid'] = payment.amount_paid
     paymentData['remaining_balance'] = payment.remaining_balance
-    paymentData['createdAt'] = payment.createdAt
-    paymentData['updatedAt'] = payment.updatedAt
+    paymentData['payment_status'] = payment.payment_status
     paymentData['customer_name'] = payment.Customer.full_name
     paymentData['loan_product_id'] = payment.LoanProduct.loan_product_id
     paymentData['loan_product_name'] = payment.LoanProduct.loan_product_name
+    paymentData['createdAt'] = payment.createdAt
+    paymentData['updatedAt'] = payment.updatedAt
+    
     return paymentData
   })
   return paymentDatas;
@@ -41,10 +44,11 @@ const getAllPaymentsByCustomer = async (customerId) => {
     paymentData['next_term_fee'] = payment.next_term_fee
     paymentData['amount_paid'] = payment.amount_paid
     paymentData['remaining_balance'] = payment.remaining_balance
-    paymentData['createdAt'] = payment.createdAt
-    paymentData['updatedAt'] = payment.updatedAt
+    paymentData['payment_status'] = payment.payment_status
     paymentData['customer_name'] = payment.Customer.full_name
     paymentData['loan_product_name'] = payment.LoanProduct.loan_product_name
+    paymentData['createdAt'] = payment.createdAt
+    paymentData['updatedAt'] = payment.updatedAt
     return paymentData
   })
   return paymentDatas;
@@ -63,18 +67,19 @@ const getPaymentById = async (paymentId) => {
   paymentData['next_term_fee'] = foundPayment.next_term_fee
   paymentData['amount_paid'] = foundPayment.amount_paid
   paymentData['remaining_balance'] = foundPayment.remaining_balance
+  paymentData['payment_status'] = foundPayment.payment_status
   paymentData['customer_id'] = foundPayment.Customer.customer_id
   paymentData['customer_name'] = foundPayment.Customer.full_name
-  paymentData['createdAt'] = foundPayment.createdAt
-  paymentData['updatedAt'] = foundPayment.updatedAt
   paymentData['loan_product_id'] = foundPayment.LoanProduct.loan_product_id
   paymentData['loan_product_name'] = foundPayment.LoanProduct.loan_product_name
+  paymentData['createdAt'] = foundPayment.createdAt
+  paymentData['updatedAt'] = foundPayment.updatedAt
 
   return paymentData
 }
 
 const createNewPayment = async (newPaymentData) => {
-  const requiredFields = ['loan_product_id', 'customer_id', 'payment_date', 'loan_term', 'principal_amount', 'remaining_balance']
+  const requiredFields = ['loan_product_id', 'customer_id', 'payment_date', 'loan_term', 'principal_amount', 'remaining_balance', 'payment_status']
   const checkRequiredFieldsResult = checkRequiredFields(newPaymentData, requiredFields)
 
   if (!checkRequiredFieldsResult.isValid) {
@@ -89,13 +94,18 @@ const createNewPayment = async (newPaymentData) => {
     throw new NoDataFoundError(`No loan product with id ${loan_product_id}`);
   }
 
-  // 2. Check if customer exist in DB
+  // 2. Check if this loan product is active
+  if (foundLoanProduct.status == LoanProductConst.INACTIVE) {
+    throw new CreateNewDataError(`Can not create new payment because loan product is inactive`, 404)
+  }
+
+  // 3. Check if customer exist in DB
   const foundCustomer = await userDaos.getCustomerById(customer_id);
   if (Object.keys(foundCustomer).length == 0) {
     throw new NoDataFoundError(`No customer with id ${customer_id}`);
   }
 
-  // 3. Crete new payment
+  // 4. Crete new payment
   newPaymentData['createdAt'] = new Date()
   const newPayment = await paymentDaos.createNewPayment(newPaymentData);
   return newPayment

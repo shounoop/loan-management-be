@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
         },
         repayment_schedule: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.INTEGER,
         },
         eligibility_criteria: {
             type: DataTypes.TEXT
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT
         },
         status: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.INTEGER,
         },
         createdAt: {
             type: DataTypes.DATE,
