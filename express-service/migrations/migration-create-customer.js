@@ -40,7 +40,7 @@ module.exports = {
                 type: Sequelize.STRING(100),
             },
             customer_status: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.INTEGER,
             },
             createdAt: {
                 allowNull: false,

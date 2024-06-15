@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT
         },
         status: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.INTEGER,
         },
         createdAt: {
             type: DataTypes.DATE,

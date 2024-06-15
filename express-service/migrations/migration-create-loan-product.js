@@ -49,7 +49,7 @@ module.exports = {
                 type: Sequelize.TEXT
             },
             status: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
             createdAt: {
