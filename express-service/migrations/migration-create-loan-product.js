@@ -37,7 +37,7 @@ module.exports = {
                 allowNull: false
             },
             repayment_schedule: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.INTEGER,
             },
             eligibility_criteria: {
                 type: Sequelize.TEXT,

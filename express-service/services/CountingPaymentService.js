@@ -33,11 +33,11 @@ const beforeCreateNewPayment = async (newPaymentData) => {
 // Hàm tính kỳ hạn dựa trên chu kỳ thanh toán
 function getTermInMonths(repaymentSchedule) {
     switch (repaymentSchedule) {
-        case 'monthly':
+        case 1:
             return 1;
-        case 'quarterly':
+        case 2:
             return 3;
-        case 'annually':
+        case 3:
             return 12;
         default:
             return 1;
@@ -144,6 +144,7 @@ const updatePaymentbyStatus = async () => {
                 }
             ]
         });
+        console.log('payment', payments)
         if (payments) {
             for (let payment of payments) {
                 const loanProduct = payment.LoanProduct;
@@ -156,8 +157,11 @@ const updatePaymentbyStatus = async () => {
                 let nextTermFee = parseFloat(payment.next_term_fee)
                 let remainBalance = parseFloat(payment.remaining_balance)
                 if (daysDifference > 0) {
-                    if (payment.payment_status === '3' && payment.next_term_fee === 0) {
-                        payment.payment_status = '5'
+                    if (payment.payment_status === PaymentConst.DELINQUENT && parseFloat(payment.next_term_fee) === parseFloat(0.00)) {
+                        payment.payment_status = PaymentConst.DISBURSED
+                    }
+                    if (payment.payment_status === PaymentConst.DISBURSED && payment.next_term_fee > 0) {
+                        payment.payment_status = PaymentConst.DELINQUENT
                         if (loanMethod.loan_method_id === 1) {
                             const principalAmount = parseFloat(payment.principal_amount);
                             const interestRate = parseFloat(loanType.interest_rate / 100);

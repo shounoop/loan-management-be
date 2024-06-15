@@ -20,7 +20,7 @@ let createDocument = (data) => {
                     maximum_term: data.maximum_term,
                     repayment_schedule: data.repayment_schedule,
                     eligibility_criteria: data.eligibility_criteria,
-                    product_description: data.product_description,
+                    loan_product_desc: data.loan_product_desc,
                     additional_notes: data.additional_notes,
                     late_fee: data.late_fee,
                     status: data.status,
@@ -100,7 +100,7 @@ let editDocument = (data) => {
                     check.maximum_term = data.maximum_term;
                     check.repayment_schedule = data.repayment_schedule;
                     check.eligibility_criteria = data.eligibility_criteria;
-                    check.product_description = data.product_description;
+                    check.loan_product_desc = data.loan_product_desc;
                     check.additional_notes = data.additional_notes;
                     check.late_fee = data.late_fee;
                     check.status = data.status;
