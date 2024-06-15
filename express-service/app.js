@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 database.sequelize
 	.authenticate()
 	.then(() => {
-		console.log('Connection to database successful!');
+		console.log('Connect to database successful!');
 	})
 	.catch((err) => {
 		console.log(err);
