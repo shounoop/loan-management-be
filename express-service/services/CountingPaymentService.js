@@ -1,8 +1,9 @@
-const { before } = require('lodash');
 const moment = require('moment');
-const loanProductService = require('../services/loanProductService')
-const db = require("../models")
 const { Op } = require('sequelize');
+const loanProductService = require('../services/loanProductService');
+const db = require("../models");
+const PaymentConst = require('../constant/paymentConst');
+
 const beforeCreateNewPayment = async (newPaymentData) => {
     let data = {}
     console.log('newPaymentData', newPaymentData)
@@ -32,7 +33,7 @@ const beforeCreateNewPayment = async (newPaymentData) => {
 // Hàm tính kỳ hạn dựa trên chu kỳ thanh toán
 function getTermInMonths(repaymentSchedule) {
     switch (repaymentSchedule) {
-        case 'tháng':
+        case 'monthly':
             return 1;
         case 'quarterly':
             return 3;
@@ -129,7 +130,7 @@ const updatePaymentbyStatus = async () => {
         const payments = await db.Payment.findAll({
             where: {
                 payment_status: {
-                    [Op.or]: ['3', '5']
+                    [Op.or]: [PaymentConst.DISBURSED, PaymentConst.DELINQUENT]
                 }
             },
             include: [

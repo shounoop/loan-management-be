@@ -2,7 +2,7 @@
 const express = require('express');
 const paymentController = require('../controllers/payment');
 const asyncHandler = require('../middlewares/asyncHandler');
-const countingPaymentController = require('../controllers/countingPaymentController')
+const countingPaymentController = require('../controllers/countingPaymentController');
 
 const router = express.Router();
 // Get detail of all payment
@@ -24,7 +24,7 @@ router.post('', asyncHandler(countingPaymentController.beforeCreateNewPayment), 
 // Update a payment
 router.put('/:paymentId', asyncHandler(paymentController.updatePayment));
 // Update a payment date
-router.put('/status/:paymentId', asyncHandler(paymentController.updateStatusPayment));
+// router.put('/status/:paymentId', asyncHandler(paymentController.updateStatusPayment));
 // Delete a payment
 router.delete('/:paymentId', asyncHandler(paymentController.deletePaymentById));
 // update interest amount updatePaymentStatusMiddleware
