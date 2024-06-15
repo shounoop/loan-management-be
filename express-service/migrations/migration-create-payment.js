@@ -40,7 +40,7 @@ module.exports = {
                 allowNull: false,
             },
             payment_status: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.INTEGER,
             },
             createdAt: {
                 allowNull: false,
