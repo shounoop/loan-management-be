@@ -19,7 +19,7 @@ let sendSimpleEmail = async (dataSend) => {
         from: process.env.EMAIL_APP, // sender address
         to: dataSend.email, // list of receivers
         subject: "Thông báo hạn vay tín dụng ", // Subject line
-        text: "Hello world?", // plain text body
+        text: "Ngân hàng ABC", // plain text body
         html: getBodyHTMLEmail(dataSend),
     });
 }
@@ -35,11 +35,11 @@ let getBodyHTMLEmail = (dataSend) => {
     <p>Thông tin chi tiết:</p>
     <ul>
         <li><strong>Tên khoản vay:</strong> ${dataSend.method_name}</li>
-        <li><strong>Số tiền đóng theo chu kì:</strong> ${dataSend.amount_paid}</li>
+        <li><strong>Số tiền đóng theo chu kì:</strong> ${dataSend.next_term_fee} đồng</li>
         <li><strong>Hạn trả tiền vay:</strong> ${dataSend.payment_date}</li>
     </ul>
     
-    <p>Vui lòng thanh toán số tiền đóng trước ngày hạn trả để tránh các khoản phí trễ hạn.</p>
+    <p>Vui lòng thanh toán số tiền đóng trước ngày đã hẹn để tránh các khoản phí trễ hạn.</p>
     
     <p>Xin trân thành cảm ơn.</p>
     

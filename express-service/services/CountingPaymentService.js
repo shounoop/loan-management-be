@@ -157,6 +157,9 @@ const updatePaymentbyStatus = async () => {
                 let nextTermFee = parseFloat(payment.next_term_fee)
                 let remainBalance = parseFloat(payment.remaining_balance)
                 if (daysDifference > 0) {
+                    if (parseFloat(payment.remaining_balance) === parseFloat(0.00)) {
+                        payment.payment_status = PaymentConst.PAID_OFF
+                    }
                     if (payment.payment_status === PaymentConst.DELINQUENT && parseFloat(payment.next_term_fee) === parseFloat(0.00)) {
                         payment.payment_status = PaymentConst.DISBURSED
                     }

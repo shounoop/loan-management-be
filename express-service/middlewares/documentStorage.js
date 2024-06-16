@@ -10,7 +10,7 @@ let createHTML = async (req, res) => {
     const day = currentDate.getDate();
     const month = currentDate.getMonth() + 1; // Tháng bắt đầu từ 0
     const year = currentDate.getFullYear();
-    const amount_word = convertToWords(req.body.loan_amount)
+    const amount_word = convertToWords(req.body.principal_amount)
     const loan = {
         name: req.body.full_name,
         cmnd: req.body.identity_number,
@@ -18,11 +18,12 @@ let createHTML = async (req, res) => {
         now_add: req.body.address,
         phoneNumber: req.body.phone_number,
         email: req.body.email,
-        amount: req.body.loan_amount,
+        amount: req.body.principal_amount,
         amount_word: amount_word,
         reason: req.body.loan_type_name,
-        term: req.body.term,
+        term: req.body.loan_term,
         assets: req.body.loan_method_name,
+        interest: req.body.interest_rate,
         date: daysOfWeek[currentDate.getDay()],
         day: day,
         month: month,
