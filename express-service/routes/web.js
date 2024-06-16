@@ -46,8 +46,8 @@ let initWebRouters = (app) => {
     router.put('/api/edit-loan-method', loanMethodController.editLoanMethod)
     router.delete('/api/delete-loan-method', loanMethodController.deleteLoanMethod)
     //Document
-    router.get('/api/create', documentStorage.createHTML)
-    router.get('/api/generate', documentStorage.generateReport)
+    router.post('/api/create', documentStorage.createHTML)
+    router.post('/api/generate', documentStorage.generateReport)
 
     //send mail testing
     router.post('/api/sendEmail', async (req, res) => {

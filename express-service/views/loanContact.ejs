@@ -18,30 +18,37 @@
     margin-right: 1.5cm;">
         <p><em>- Căn cứ Bộ Luật Dân sự năm 2015;</em></p>
         <p><em>- Căn cứ Luật Ngân hàng nhà nước Việt nam năm 2010;</em></p>
-        <p>Hôm nay ngày......tháng.....năm 20.... tại .........., chúng tôi gồm:</p>
+        <p>Hôm nay ngày <%= loan.day%> tháng <%= loan.month%> năm <%= loan.yeah%> tại, chúng tôi gồm:</p>
         <p><strong>1. Bên A: (Bên cho vay)</strong></p>
-        <p>Địa chỉ:.............................................................................</p>
-        <p>Điện thoại:........................................................................</p>
-        <p>Tại:....................................................................................</p>
-        <p>Đại diện:...........................................................................</p>
-        <p>Chức vụ:..........................................................................</p>
+        <p>Địa chỉ: Số 1 đường Đê La Thành, Hà Nội</p>
+        <p>Điện thoại: 0344569023</p>
+        <p>Đại diện: ngân hàng ABC</p>
+        <p>Chức vụ: Trưởng phòng kinh doanh</p>
         <p><strong>2. Bên B: (Bên vay)</strong></p>
-        <p>Địa Địa chỉ:.......................................................................</p>
-        <p>Điện thoại:........................................................................</p>
-        <p>Hai bên thống nhất việc Bên A cho Bên B vay tiền từ Quỹ Tín chấp của Hội Doanh nghiệp trẻ Hà Nội theo các
-            điều
+        <p>Họ và tên: <%= loan.name%>
+        </p>
+        <p>Căn cước công dân: <%= loan.cmnd%>
+        </p>
+        <p>Địa Địa chỉ: <%= loan.cmnd_add%>
+        </p>
+        <p>Điện thoại: <%= loan.phoneNumber%>
+        </p>
+        <p>Hai bên thống nhất việc Bên A cho Bên B vay tiền từ Quỹ Tín chấp của ngân hàng ABC
             khoản, điều kiện dưới đây:</p>
         <p><strong>Điều 1: Nội dung cho vay</strong></p>
-        <p>Tổng số tiền vay bằng số là ............ đ, bằng chữ là ………………….</p>
+        <p>Tổng số tiền vay bằng số là <%= loan.amount%> đ, bằng chữ là <%= loan.amount_word%> đồng.
+        </p>
         <p><strong>Điều 2: Mục đích sử dụng tiền vay</strong></p>
         <p>Số tiền vay sẽ được sử dụng vào mục đích đề cập trong Dự án/Phương án sản xuất kinh doanh đính kèm. Dự
             án/Phương
             án được coi là bộ phận không tách rời của Hợp đồng này.
         <p><strong>Điều 3: Thời hạn cho vay</strong></p>
-        <p>3.1. Thời hạn cho vay là ... tháng, từ ngày ...... đến ngày .... tháng .... năm ....</p>
+        <p>3.1. Thời hạn cho vay là <%= loan.term%> tháng, từ ngày ...... đến ngày .... tháng .... năm ....</p>
         <p>3.2. Ngày trả nợ cuối cùng là..../..../........</p>
         <p><strong>Điều 4: Lãi suất cho vay</strong></p>
-        <p>4.1. Lãi suất cho vay là ....%/tháng (số tiền viết bằng chữ), được tính trên tổng số tiền vay.</p>
+        <p>4.1. Lãi suất cho vay là <%= loan.interest%> %/tháng (số tiền viết bằng chữ), được tính trên tổng số tiền
+                vay.
+        </p>
         <p>4.2. Tiền lãi được tính trên tổng số tiền vay, theo lãi suất cho vay nhân với thời gian vay. Thời gian vay
             được
             kể từ ngày Bên B nhận tiền vay đến ngày trả hết nợ gốc và lãi (kể cả lãi quá hạn nếu có), căn cứ vào các
