@@ -18,8 +18,6 @@ public class UserDto {
 
   private Set<String> role;
 
-  @NotBlank
-  @Size(min = 6, max = 40)
   private String password;
 
   public String getUsername() {
