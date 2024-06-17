@@ -70,8 +70,10 @@ const getPaymentById = async (paymentId) => {
   paymentData['payment_status'] = foundPayment.payment_status
   paymentData['customer_id'] = foundPayment.Customer.customer_id
   paymentData['customer_name'] = foundPayment.Customer.full_name
+  paymentData['email'] = foundPayment.Customer.email
   paymentData['loan_product_id'] = foundPayment.LoanProduct.loan_product_id
   paymentData['loan_product_name'] = foundPayment.LoanProduct.loan_product_name
+  paymentData['method_name'] = foundPayment.LoanProduct.ProductMethod.loan_method_name
   paymentData['createdAt'] = foundPayment.createdAt
   paymentData['updatedAt'] = foundPayment.updatedAt
 

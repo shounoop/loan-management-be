@@ -80,7 +80,12 @@ const getByPaymentById = async (paymentId) => {
     {
       include: [
         {
-          model: loanProduct
+          model: loanProduct,
+          as: 'LoanProduct',
+          include: [
+            { model: db.LoanType, as: 'ProductType' },
+            { model: db.LoanMethod, as: 'ProductMethod' }
+          ]
         },
         {
           model: customerModel
