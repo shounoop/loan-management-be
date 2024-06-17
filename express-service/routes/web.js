@@ -67,7 +67,7 @@ let initWebRouters = (app) => {
         }
     })
     // test aws connection
-    router.post('/api/upload', upload.any(), async (req, res) => {
+    router.post('/api/upload/:id', upload.any(), async (req, res) => {
         try {
             let fileName = []
             if (req.files) {
@@ -81,16 +81,16 @@ let initWebRouters = (app) => {
                         })
                     }
                 }
-                if (true) {
+                if (req.params.id) {
                     let infor = await documentService.savefile({
                         fileName: fileName,
-                        id: 1,
+                        id: req.params.id,
                     })
                     res.status(200).json({ infor })
                 } else {
                     res.status(404).json({
                         EC: 1,
-                        EM: 'Cannot find object'
+                        EM: 'No payment chosen'
                     })
                 }
             } else {
@@ -109,7 +109,7 @@ let initWebRouters = (app) => {
         }
     })
     router.get('/api/download/filename', AWSController.downloadFileS3)
-    router.get('/api/get-file-by-id', documentController.getDocumentById)
+    router.get('/api/get-file-by-id/:id', documentController.getDocumentById)
     router.delete('/api/delete-file-by-name', documentController.deleteDocumentByName)
 
 
