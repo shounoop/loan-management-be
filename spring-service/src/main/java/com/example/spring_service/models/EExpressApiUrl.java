@@ -32,5 +32,7 @@ public class EExpressApiUrl {
     public static final String GET_DOCUMENT_BY_ID = "/get-file-by-id";
     public static final String UPLOAD_FILES = "/upload";
     public static final String DOWNLOAD_FILES = "/download/filename";
+    public static final String DELETE_FILE = "/delete-file-by-name";
+
 
 }

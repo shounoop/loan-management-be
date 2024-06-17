@@ -378,38 +378,33 @@ public class ExpressController {
         return response;
     }
 
-    @GetMapping("/documents/get-files-by-id")
-    public ResponseEntity<?> getDocumentById(@RequestBody String payload) {
-        String url = expressServiceUrl + EExpressApiUrl.GET_DOCUMENT_BY_ID;
+    @GetMapping("/documents/all/{id}")
+    public ResponseEntity<?> getDocumentById(@PathVariable("id") Integer id) {
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        String url = expressServiceUrl + EExpressApiUrl.GET_DOCUMENT_BY_ID + "/" + id;
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
-
-        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
-
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 
-    @DeleteMapping("/documents")
-    public ResponseEntity<?> deleteDocument(@RequestBody String payload) {
-        String url = expressServiceUrl + EExpressApiUrl.GET_DOCUMENT_BY_ID;
+    @DeleteMapping("/documents/{id}/{filename}")
+    public ResponseEntity<?> deleteDocument(@PathVariable("id") Integer id, @PathVariable("filename") String filename) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        String url = expressServiceUrl + EExpressApiUrl.DELETE_FILE + "?id=" + id + "&filename="
+                + filename;
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
-
-        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
 
         return response;
     }
 
     // upload with form-data
-    @PostMapping("/documents")
-    public ResponseEntity<?> uploadFiles(@RequestBody String payload) {
-        String url = expressServiceUrl + EExpressApiUrl.UPLOAD_FILES;
+    @PostMapping("/documents/{id}")
+    public ResponseEntity<?> uploadFiles(@PathVariable("id") Integer id, @RequestBody String payload) {
+        String url = expressServiceUrl + EExpressApiUrl.UPLOAD_FILES + "/" + id;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
