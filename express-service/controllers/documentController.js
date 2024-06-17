@@ -49,7 +49,7 @@ let editDocument = async (req, res) => {
 }
 let deleteDocumentByName = async (req, res) => {
     try {
-        let infor = await DocumentService.deleteDocumentByName(req.body);
+        let infor = await DocumentService.deleteDocumentByName(req.query);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)

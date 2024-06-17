@@ -139,8 +139,7 @@ let deleteDocumentByName = (data) => {
                     },
                 })
                 if (check) {
-                    let send = await AWSController.deleteFile(check.document_path)
-                    console.log('send', send)
+                    await AWSController.deleteFile(check.document_path)
                     await db.Document.destroy({
                         where: {
                             document_host_id: data.id,
