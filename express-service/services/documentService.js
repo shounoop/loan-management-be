@@ -1,6 +1,6 @@
 const { resolve } = require("bluebird")
 const db = require("../models")
-
+const AWSController = require("../middlewares/AWSController")
 let createDocument = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -139,6 +139,8 @@ let deleteDocumentByName = (data) => {
                     },
                 })
                 if (check) {
+                    let send = await AWSController.deleteFile(check.document_path)
+                    console.log('send', send)
                     await db.Document.destroy({
                         where: {
                             document_host_id: data.id,

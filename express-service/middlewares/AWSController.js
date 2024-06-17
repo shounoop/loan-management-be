@@ -84,9 +84,23 @@ let downloadFileS3 = async (req, res) => {
         res.send('Fail to download')
     }
 }
+let deleteFile = async (fileName) => {
+    try {
+        const params = {
+            Bucket: bucketName,
+            Key: fileName,
+        }
+
+        const deleteFile = await s3.deleteObject(params).promise();
+
+        return deleteFile;
+    } catch (error) {
+        console.log(error)
+    }
+}
 // uploadFile(filePath, bucketName, newFileNameKey)
 // downloadFile(bucketName, 'file.pdf', './uploads/save.pdf')
 
 module.exports = {
-    uploadFileOnS3, downloadFileS3, uploadFile,
+    uploadFileOnS3, downloadFileS3, uploadFile, deleteFile,
 }

@@ -25,7 +25,7 @@ let getAllDocument = async (req, res) => {
 }
 let getDocumentById = async (req, res) => {
     try {
-        let infor = await DocumentService.getAllDocument(req.query.id);
+        let infor = await DocumentService.getAllDocument(req.params.id);
         return res.status(200).json({ infor })
     } catch (e) {
         console.log(e)
