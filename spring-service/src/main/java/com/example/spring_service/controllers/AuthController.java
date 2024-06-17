@@ -5,15 +5,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.spring_service.dto.UserActivityDto;
 import com.example.spring_service.dto.UserDto;
 import com.example.spring_service.models.ERole;
 import com.example.spring_service.models.Role;
 import com.example.spring_service.models.User;
+import com.example.spring_service.models.UserActivity;
 import com.example.spring_service.payload.request.LoginRequest;
 import com.example.spring_service.payload.request.SignupRequest;
 import com.example.spring_service.payload.response.MessageResponse;
 import com.example.spring_service.payload.response.UserInfoResponse;
 import com.example.spring_service.repository.RoleRepository;
+import com.example.spring_service.repository.UserActivityRepository;
 import com.example.spring_service.repository.UserRepository;
 import com.example.spring_service.security.jwt.JwtUtils;
 import com.example.spring_service.security.services.UserDetailsImpl;
@@ -65,6 +68,9 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    private UserActivityRepository userActivityRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -179,5 +185,19 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @GetMapping("/user-activities")
+    public ResponseEntity<List<UserActivityDto>> getAllUserActivities() {
+        List<UserActivity> activities = userActivityRepository.findAll();
+        List<UserActivityDto> activityDtos = activities.stream()
+                .map(activity -> new UserActivityDto(
+                        activity.getId(),
+                        activity.getActivityDescription(),
+                        activity.getTimestamp(),
+                        activity.getUser().getUsername(),
+                        activity.getUser().getEmail()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(activityDtos);
     }
 }

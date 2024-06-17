@@ -1,5 +1,8 @@
 package com.example.spring_service.controllers;
 
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -7,6 +10,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.spring_service.models.EExpressApiUrl;
+import com.example.spring_service.models.User;
+import com.example.spring_service.models.UserActivity;
 import com.example.spring_service.payload.request.LoanMethodCreatePayload;
 import com.example.spring_service.payload.request.LoanMethodDeletePayload;
 import com.example.spring_service.payload.request.LoanMethodEditPayload;
@@ -28,6 +35,9 @@ import com.example.spring_service.payload.request.LoanProductEditPayload;
 import com.example.spring_service.payload.request.LoanTypeCreatePayload;
 import com.example.spring_service.payload.request.LoanTypeDeletePayload;
 import com.example.spring_service.payload.request.LoanTypeEditPayload;
+import com.example.spring_service.repository.UserActivityRepository;
+import com.example.spring_service.repository.UserRepository;
+import com.example.spring_service.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
@@ -35,6 +45,12 @@ import com.example.spring_service.payload.request.LoanTypeEditPayload;
 public class ExpressController {
     @Value("${shounoop.app.expressServiceUrl}")
     private String expressServiceUrl;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserActivityRepository userActivityRepository;
 
     private final RestTemplate restTemplate;
 
@@ -46,6 +62,11 @@ public class ExpressController {
     public ResponseEntity<?> getLoanMethods() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_METHODS;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed loan methods");
+        }
+
         return response;
     }
 
@@ -57,6 +78,11 @@ public class ExpressController {
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_METHOD_BY_ID + "?id=" + id;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed a loan method");
+        }
+
         return response;
     }
 
@@ -71,6 +97,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Created a loan method");
+        }
+
         return response;
     }
 
@@ -84,6 +114,10 @@ public class ExpressController {
         HttpEntity<LoanMethodEditPayload> requestEntity = new HttpEntity<>(payload, headers);
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Edited a loan method");
+        }
 
         return response;
     }
@@ -101,13 +135,23 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Deleted a loan method");
+        }
+
         return response;
+
     }
 
     @GetMapping("/loan-types")
     public ResponseEntity<?> getLoanTypes() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_TYPES;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed loan types");
+        }
+
         return response;
     }
 
@@ -119,6 +163,11 @@ public class ExpressController {
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_TYPE_BY_ID + "?id=" + id;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed a loan type");
+        }
+
         return response;
     }
 
@@ -133,6 +182,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Created a loan type");
+        }
+
         return response;
     }
 
@@ -146,6 +199,10 @@ public class ExpressController {
         HttpEntity<LoanTypeEditPayload> requestEntity = new HttpEntity<>(payload, headers);
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Edited a loan type");
+        }
 
         return response;
     }
@@ -163,6 +220,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Deleted a loan type");
+        }
+
         return response;
     }
 
@@ -170,6 +231,11 @@ public class ExpressController {
     public ResponseEntity<?> getLoanProducts() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_PRODUCTS;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed loan products");
+        }
+
         return response;
     }
 
@@ -181,6 +247,11 @@ public class ExpressController {
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_PRODUCT_BY_ID + "?id=" + id;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed a loan product");
+        }
+
         return response;
     }
 
@@ -195,6 +266,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Created a loan product");
+        }
+
         return response;
     }
 
@@ -208,6 +283,10 @@ public class ExpressController {
         HttpEntity<LoanProductEditPayload> requestEntity = new HttpEntity<>(payload, headers);
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Edited a loan product");
+        }
 
         return response;
     }
@@ -225,6 +304,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Deleted a loan product");
+        }
+
         return response;
     }
 
@@ -232,6 +315,11 @@ public class ExpressController {
     public ResponseEntity<?> getCustomers() {
         String url = expressServiceUrl + EExpressApiUrl.GET_CUSTOMERS;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed customers");
+        }
+
         return response;
     }
 
@@ -243,6 +331,11 @@ public class ExpressController {
 
         String url = expressServiceUrl + EExpressApiUrl.GET_CUSTOMER_BY_ID + "/" + id;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed a customer");
+        }
+
         return response;
     }
 
@@ -258,6 +351,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Created a customer");
+        }
+
         return response;
     }
 
@@ -272,6 +369,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Edited a customer");
+        }
+
         return response;
     }
 
@@ -281,6 +382,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Deleted a customer");
+        }
+
         return response;
     }
 
@@ -288,6 +393,11 @@ public class ExpressController {
     public ResponseEntity<?> getLoanApplications() {
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_APPLICATIONS;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed loan applications");
+        }
+
         return response;
     }
 
@@ -299,6 +409,11 @@ public class ExpressController {
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_APPLICATION_BY_ID + "/" + id;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed a loan application");
+        }
+
         return response;
     }
 
@@ -310,6 +425,11 @@ public class ExpressController {
 
         String url = expressServiceUrl + EExpressApiUrl.GET_LOAN_APPLICATION_BY_CUSTOMER_ID + "/" + id;
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed a loan application");
+        }
+
         return response;
     }
 
@@ -323,6 +443,10 @@ public class ExpressController {
         HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Created a loan application");
+        }
 
         return response;
     }
@@ -338,6 +462,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Edited a loan application");
+        }
+
         return response;
     }
 
@@ -346,6 +474,10 @@ public class ExpressController {
         String url = expressServiceUrl + EExpressApiUrl.DELETE_LOAN_APPLICATION + "/" + id;
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Deleted a loan application");
+        }
 
         return response;
     }
@@ -361,6 +493,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Generated a PDF");
+        }
+
         return response;
     }
 
@@ -375,6 +511,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Sent an email");
+        }
+
         return response;
     }
 
@@ -387,6 +527,11 @@ public class ExpressController {
         String url = expressServiceUrl + EExpressApiUrl.GET_DOCUMENT_BY_ID + "/" + id;
 
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Viewed a document");
+        }
+
         return response;
     }
 
@@ -397,6 +542,10 @@ public class ExpressController {
                 + filename;
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Deleted a document");
+        }
 
         return response;
     }
@@ -413,6 +562,10 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Uploaded a document");
+        }
+
         return response;
     }
 
@@ -422,7 +575,30 @@ public class ExpressController {
 
         ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
 
+        if (response.getStatusCode().is2xxSuccessful()) {
+            saveUserActivity("Downloaded a document");
+        }
+
         return response;
     }
 
+    private void saveUserActivity(String activityDescription) {
+        User currentUser = getCurrentUser();
+
+        // Create UserActivity
+        UserActivity userActivity = new UserActivity();
+        userActivity.setActivityDescription(activityDescription);
+        userActivity.setTimestamp(LocalDateTime.now());
+        userActivity.setUser(currentUser);
+
+        // Save UserActivity
+        userActivityRepository.save(userActivity);
+    }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return userRepository.findById(userDetails.getId()).orElseThrow(
+                () -> new RuntimeException("Error: User is not found."));
+    }
 }
