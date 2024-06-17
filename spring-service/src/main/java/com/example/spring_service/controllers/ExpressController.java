@@ -349,4 +349,80 @@ public class ExpressController {
 
         return response;
     }
+
+    @PostMapping("/generate-pdf")
+    public ResponseEntity<?> generatePdf(@RequestBody String payload) {
+        String url = expressServiceUrl + EExpressApiUrl.GENERATE_PDF;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
+
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        return response;
+    }
+
+    @PostMapping("/send-email")
+    public ResponseEntity<?> sendEmail(@RequestBody String payload) {
+        String url = expressServiceUrl + EExpressApiUrl.SEND_EMAIL;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
+
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/documents/all/{id}")
+    public ResponseEntity<?> getDocumentById(@PathVariable("id") Integer id) {
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + EExpressApiUrl.GET_DOCUMENT_BY_ID + "/" + id;
+
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+        return response;
+    }
+
+    @DeleteMapping("/documents/{id}/{filename}")
+    public ResponseEntity<?> deleteDocument(@PathVariable("id") Integer id, @PathVariable("filename") String filename) {
+
+        String url = expressServiceUrl + EExpressApiUrl.DELETE_FILE + "?id=" + id + "&filename="
+                + filename;
+
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+
+        return response;
+    }
+
+    // upload with form-data
+    @PostMapping("/documents/{id}")
+    public ResponseEntity<?> uploadFiles(@PathVariable("id") Integer id, @RequestBody String payload) {
+        String url = expressServiceUrl + EExpressApiUrl.UPLOAD_FILES + "/" + id;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
+
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/documents/{filename}")
+    public ResponseEntity<?> downloadFile(@PathVariable("filename") String filename) {
+        String url = expressServiceUrl + EExpressApiUrl.DOWNLOAD_FILES + "?filename=" + filename;
+
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
 }
