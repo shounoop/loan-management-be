@@ -34,5 +34,4 @@ public class EExpressApiUrl {
     public static final String DOWNLOAD_FILES = "/download/filename";
     public static final String DELETE_FILE = "/delete-file-by-name";
 
-
 }
