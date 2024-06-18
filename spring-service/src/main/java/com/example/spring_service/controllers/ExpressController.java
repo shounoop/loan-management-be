@@ -601,4 +601,114 @@ public class ExpressController {
         return userRepository.findById(userDetails.getId()).orElseThrow(
                 () -> new RuntimeException("Error: User is not found."));
     }
+
+    @GetMapping("/loan-products/total")
+    public ResponseEntity<?> getTotalLoanProducts() {
+        String url = expressServiceUrl + "/loan-products/total";
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/loan-products/total/year/{year}")
+    public ResponseEntity<?> getTotalLoanProductsByYear(@PathVariable("year") Integer year) {
+        if (year == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + "/loan-products/total/year/" + year;
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/loan-products/most-sold/year/{year}")
+    public ResponseEntity<?> getMostSoldLoanProductsByYear(@PathVariable("year") Integer year) {
+        if (year == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + "/loan-products/most-sold/year/" + year;
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/loan-products/most-sold/year/{year}/month/{month}")
+    public ResponseEntity<?> getMostSoldLoanProductsByYearAndMonth(@PathVariable("year") Integer year,
+            @PathVariable("month") Integer month) {
+        if (year == null || month == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + "/loan-products/most-sold/year/" + year + "/month/" + month;
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/customers/total")
+    public ResponseEntity<?> getTotalCustomers() {
+        String url = expressServiceUrl + "/customers/total";
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/customers/total/year/{year}")
+    public ResponseEntity<?> getTotalCustomersByYear(@PathVariable("year") Integer year) {
+        if (year == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + "/customers/total/year/" + year;
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/customers/total/{date}")
+    public ResponseEntity<?> getTotalCustomersByDate(@PathVariable("date") String date) {
+        if (date == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + "/customers/total/" + date;
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/payments/total")
+    public ResponseEntity<?> getTotalPayments() {
+        String url = expressServiceUrl + "/payments/total";
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/payments/total/year/{year}")
+    public ResponseEntity<?> getTotalPaymentsByYear(@PathVariable("year") Integer year) {
+        if (year == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + "/payments/total/year/" + year;
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
+    @GetMapping("/payments/total/{date}")
+    public ResponseEntity<?> getTotalPaymentsByDate(@PathVariable("date") String date) {
+        if (date == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String url = expressServiceUrl + "/payments/total/" + date;
+        ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
+
+        return response;
+    }
+
 }
