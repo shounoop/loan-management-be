@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.spring_service.models.EExpressApiUrl;
 import com.example.spring_service.models.User;
@@ -552,15 +556,18 @@ public class ExpressController {
 
     // upload with form-data
     @PostMapping("/documents/{id}")
-    public ResponseEntity<?> uploadFiles(@PathVariable("id") Integer id, @RequestBody String payload) {
+    public ResponseEntity<?> uploadFiles(@PathVariable("id") Integer id, @RequestParam("files") MultipartFile file) {
         String url = expressServiceUrl + EExpressApiUrl.UPLOAD_FILES + "/" + id;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(payload, headers);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("files", file.getResource());
 
-        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             saveUserActivity("Uploaded a document");
