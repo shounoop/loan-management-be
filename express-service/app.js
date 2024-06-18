@@ -1,13 +1,16 @@
 'use strict';
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 const app = express();
 const port = 3000;
 const database = require('./models');
 const initWebRouters = require('./routes/web');
 const viewEngine = require('./configs/viewEngine');
+const { corsOptions } = require('./configs/corsConfig');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions))
 
 // database.sequelize
 // 	.sync({ force: true })
