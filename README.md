@@ -19,6 +19,10 @@ loan-management-be/
 └── README.md           # Project documentation
 ```
 
+## Frontend Application
+A recommended frontend for this backend is available here:
+[Loan Management Frontend (Next.js)](https://github.com/shounoop/loan-management-fe)
+
 ## Prerequisites
 
 - [Docker](https://www.docker.com/get-started) installed
